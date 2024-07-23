@@ -4,8 +4,47 @@ import React from "react";
 import styles from "./styles.page.module.css";
 import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
+import { DataTable } from "./data-table";
+import { columns, Payment } from "./columns";
 
-const ToolsTodo = () => {
+async function getData(): Promise<Payment[]> {
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    {
+      id: "553eads",
+      amount: 70,
+      status: "failed",
+      email: "6fgs43d@example.com",
+    },
+    {
+      id: "ydsv434",
+      amount: 230,
+      status: "success",
+      email: "fds23rfr@example.com",
+    },
+    {
+      id: "6bf34dd",
+      amount: 21,
+      status: "processing",
+      email: "kdpoepol34@example.com",
+    },
+    {
+      id: "k0de9de",
+      amount: 120,
+      status: "pending",
+      email: "5dcs324@example.com",
+    },
+  ];
+}
+
+const ToolsTodo = async () => {
+  const data = await getData();
+
   return (
     <main className={styles.TodoPageContainer}>
       <aside className={styles.TodoPageSideContent}>
@@ -19,6 +58,7 @@ const ToolsTodo = () => {
         />
         <ReusablesMainHeader Title="" Subtitle="" />
         <ReusablesDivider isVertical={false} />
+        <DataTable columns={columns} data={data} />
       </aside>
     </main>
   );
