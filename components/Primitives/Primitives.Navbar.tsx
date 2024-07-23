@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const PrimitivesNavbar = () => {
   return (
-    <nav className="flex justify-between border max-w-[1200px] m-auto p-2">
+    <nav className="flex justify-between max-w-[1200px] m-auto p-2">
       <header className="flex items-center text-lg px-2">
         <Link href={"/"}>
           <h1>app</h1>
