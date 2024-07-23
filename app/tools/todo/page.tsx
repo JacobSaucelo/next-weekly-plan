@@ -1,11 +1,12 @@
 import PrimitivesNavbar from "@/components/Primitives/Primitives.Navbar";
-import Link from "next/link";
+import React from "react";
 
-export default function Home() {
+const ToolsTodo = () => {
   return (
     <main>
       <PrimitivesNavbar />
-      <Link href="tools/todo">Todo</Link>
     </main>
   );
-}
+};
+
+export default ToolsTodo;
