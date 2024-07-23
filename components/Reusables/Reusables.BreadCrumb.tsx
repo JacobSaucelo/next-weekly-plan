@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/breadcrumb";
 
 type BreadcrumbProps = {
-  CurrentPage: String;
-  BasePageLink: string;
+  BasePage: String;
+  CurrentPage: string;
   ListPage: string[];
 };
 
