@@ -7,7 +7,7 @@
 
 .TodoPageSideContent {
   grid-column: 1 / span 2;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
   padding: 0.5rem;
 }
 

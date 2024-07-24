@@ -56,32 +56,44 @@ export function DataTable<TData, TValue>({
   return (
     <section>
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
-
-      <div className="flex items-center justify-end space-x-2 py-4">
         <Button
-          variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={(event) =>
+            table.getColumn("status")?.setFilterValue("pending")
+          }
         >
-          Previous
+          pending
         </Button>
         <Button
-          variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={(event) =>
+            table.getColumn("status")?.setFilterValue("processing")
+          }
         >
-          Next
+          processing
+        </Button>
+        <Button
+          size="sm"
+          onClick={(event) =>
+            table.getColumn("status")?.setFilterValue("success")
+          }
+        >
+          success
+        </Button>
+        <Button
+          size="sm"
+          onClick={(event) =>
+            table.getColumn("status")?.setFilterValue("failed")
+          }
+        >
+          failed
+        </Button>
+
+        <Button
+          size="sm"
+          onClick={(event) => table.getColumn("status")?.setFilterValue("")}
+        >
+          all
         </Button>
       </div>
 
@@ -134,6 +146,25 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
       </div>
     </section>
   );

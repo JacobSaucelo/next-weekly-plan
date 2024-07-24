@@ -107,8 +107,8 @@ const ToolsTodo = async () => {
 
   return (
     <main className={styles.TodoPageContainer}>
-      <aside className={styles.TodoPageSideContent}>
-        {/* <PrimitivesNavbar /> */}
+      <aside className={`${styles.TodoPageSideContent} border-r`}>
+        <PrimitivesNavbar />
       </aside>
       <aside className={styles.TodoPageMainContent}>
         <ReusablesBreadCrumb
