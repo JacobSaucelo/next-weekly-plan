@@ -26,6 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
 export type Payment = {
   id: string;
@@ -35,6 +36,7 @@ export type Payment = {
   // ---------
   title: string;
   priority: "Low" | "Medium" | "High";
+  label?: "Bug" | "Feature" | "Documentation" | "Backend" | "UI";
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -77,6 +79,19 @@ export const columns: ColumnDef<Payment>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+      );
+    },
+    cell: ({ row }) => {
+      const label = row.original.label;
+      // const label = labels.find((label) => label.value === row.original.label);
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant="outline">{label}</Badge>}
+          <span className="max-w-[450px] truncate font-medium">
+            {row.getValue("title")}
+          </span>
+        </div>
       );
     },
   },
@@ -127,33 +142,33 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ column, row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
+  // {
+  //   accessorKey: "email",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Email
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  // },
+  // {
+  //   accessorKey: "amount",
+  //   header: () => <div className="text-right">Amount</div>,
+  //   cell: ({ column, row }) => {
+  //     const amount = parseFloat(row.getValue("amount"));
+  //     const formatted = new Intl.NumberFormat("en-US", {
+  //       style: "currency",
+  //       currency: "USD",
+  //     }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
+  //     return <div className="text-right font-medium">{formatted}</div>;
+  //   },
+  // },
   {
     id: "actions",
     cell: ({ row }) => {

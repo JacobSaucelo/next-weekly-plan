@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Circle,
   CircleCheck,
@@ -158,8 +159,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <section>
-      <article className="flex flex-col gap-2 mb-2">
-        <div className="flex gap-1 flex-wrap items-center">
+      <article className="flex flex-col gap-2 mt-3 mb-4">
+        {/* <div className="flex gap-1 flex-wrap items-center">
           {FilterStatusData.map((stat) => (
             <Button
               size="sm"
@@ -190,6 +191,20 @@ export function DataTable<TData, TValue>({
               {stat.Title}
             </Button>
           ))}
+        </div> */}
+      </article>
+
+      <article>
+        <p>{data.length} Results</p>
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter tasks"
+            value={(table.getColumn("Title")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("Title")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
         </div>
       </article>
 

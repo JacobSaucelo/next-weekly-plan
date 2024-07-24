@@ -17,8 +17,19 @@ async function getData(): Promise<Payment[]> {
       amount: 100,
       status: "Backlog",
       email: "m@example.com",
-      title: "test",
+      title:
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. At expedita delectus quod optio fuga consequatur!",
       priority: "Low",
+      label: "Bug",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "Todo",
+      email: "m@example.com",
+      title: "Lorem, ipsum dolor sit fuga consequatur!",
+      priority: "High",
+      label: "Documentation",
     },
   ];
 }
