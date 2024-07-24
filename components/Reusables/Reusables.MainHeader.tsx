@@ -11,7 +11,7 @@ const SubtitleTemplate =
 
 const ReusablesMainHeader = ({ Title, Subtitle }: MainHeaderProps) => {
   return (
-    <header>
+    <header className="my-4">
       <h1 className="text-5xl font-bold">{Title || TitleTemplate}</h1>
       <p className="text-xl">{Subtitle || SubtitleTemplate}</p>
     </header>

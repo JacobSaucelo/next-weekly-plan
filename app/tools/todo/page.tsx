@@ -11,6 +11,7 @@ import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
 
 import { DataTable } from "./data-table";
 import { columns, Payment } from "./columns";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ToolsTodo = () => {
   const [tasks, setTasks] = useState<Payment[]>([
@@ -49,8 +50,17 @@ const ToolsTodo = () => {
           ListPage={["tools"]}
         />
         <ReusablesMainHeader Title="" Subtitle="" />
-        <ReusablesDivider isVertical={false} />
-        <DataTable columns={columns} data={tasks} />
+        <Tabs defaultValue="tasks">
+          <TabsList>
+            <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            <TabsTrigger value="create">New Tasks</TabsTrigger>
+          </TabsList>
+          <ReusablesDivider isVertical={false} />
+          <TabsContent value="tasks">
+            <DataTable columns={columns} data={tasks} />
+          </TabsContent>
+          <TabsContent value="create"></TabsContent>
+        </Tabs>
       </aside>
     </main>
   );
