@@ -12,6 +12,9 @@ import {
   CircleHelp,
   CircleX,
   Timer,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ArrowDownUp,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -51,26 +54,27 @@ export const columns: ColumnDef<Payment>[] = [
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
             >
-              Title
-              <ArrowUpDown className="ml-2 h-4 w-4" />
+              <span>Title</span>
+              {column.getIsSorted() === "desc" ? (
+                <ArrowDownIcon className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === "asc" ? (
+                <ArrowUpIcon className="ml-2 h-4 w-4" />
+              ) : (
+                <ArrowDownUp className="ml-2 h-4 w-4" />
+              )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  column.toggleSorting(column.getIsSorted() === "asc")
-                }
-              >
-                Title
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-              View customer
+            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+              <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Asc
             </DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Desc
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
