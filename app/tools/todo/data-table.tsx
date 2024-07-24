@@ -22,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -55,7 +54,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <section>
-      <div className="flex items-center py-4">
+      <div className="flex gap-1 flex-wrap items-center py-4">
         <Button
           size="sm"
           onClick={(event) =>
