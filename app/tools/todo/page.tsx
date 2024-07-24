@@ -8,6 +8,7 @@ import ReusablesBreadCrumb from "@/components/Reusables/Reusables.BreadCrumb";
 import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
 import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
+import CustomTodoForm from "@/components/Customs/Custom.TodoForm";
 
 import { DataTable } from "./data-table";
 import { columns, Payment } from "./columns";
@@ -77,6 +78,8 @@ const ToolsTodo = () => {
             <Button onClick={() => add(1)}>Add</Button>
             <Button onClick={() => min(1)}>Min</Button>
             <Button onClick={() => addTask(TestTask)}> Add Tasks</Button>
+            <hr />
+            <CustomTodoForm />
           </TabsContent>
         </Tabs>
       </aside>
