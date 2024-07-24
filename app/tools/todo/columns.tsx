@@ -43,13 +43,36 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "title",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              Title
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  column.toggleSorting(column.getIsSorted() === "asc")
+                }
+              >
+                Title
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+              View customer
+            </DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },
@@ -60,29 +83,10 @@ export const columns: ColumnDef<Payment>[] = [
       const payment = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <p className="flex items-center gap-1">
-              {handlePriorityIcons(payment.priority)}
-              {payment.priority}
-            </p>
-            {/* <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button> */}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <p className="flex items-center gap-1">
+          {handlePriorityIcons(payment.priority)}
+          {payment.priority}
+        </p>
       );
     },
   },
@@ -192,17 +196,17 @@ const handlePriorityIcons = (icon: string) => {
 const handleStatusIcons = (icon: string) => {
   switch (icon) {
     case "BackLog":
-      return <CircleHelp />;
+      return <CircleHelp className="text-gray-400" />;
     case "Todo":
-      return <Circle />;
+      return <Circle className="text-blue-400" />;
     case "In Progress":
-      return <Timer />;
+      return <Timer className="text-yellow-400" />;
     case "Done":
-      return <CircleCheck />;
+      return <CircleCheck className="text-green-400" />;
     case "Canceled":
-      return <CircleX />;
+      return <CircleX className="text-red-700" />;
 
     default:
-      return <CircleHelp />;
+      return <CircleHelp className="text-gray-400" />;
   }
 };
