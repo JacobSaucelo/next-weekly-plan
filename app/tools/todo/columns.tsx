@@ -7,7 +7,11 @@ import {
   ArrowUp,
   ArrowDown,
   ArrowRight,
+  Circle,
+  CircleCheck,
   CircleHelp,
+  CircleX,
+  Timer,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -23,7 +27,7 @@ import {
 export type Payment = {
   id: string;
   amount: number;
-  status: "BackLog" | "Todo" | "In Progress" | "Done" | "Canceled";
+  status: "Backlog" | "Todo" | "In Progress" | "Done" | "Canceled";
   email: string;
   // ---------
   title: string;
@@ -85,6 +89,35 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <p className="flex items-center gap-1">
+              {handleStatusIcons(payment.status)}
+              {payment.status}
+            </p>
+            {/* <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button> */}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
   {
     accessorKey: "email",
@@ -151,6 +184,23 @@ const handlePriorityIcons = (icon: string) => {
       return <ArrowRight />;
     case "High":
       return <ArrowUp />;
+
+    default:
+      return <CircleHelp />;
+  }
+};
+const handleStatusIcons = (icon: string) => {
+  switch (icon) {
+    case "BackLog":
+      return <CircleHelp />;
+    case "Todo":
+      return <Circle />;
+    case "In Progress":
+      return <Timer />;
+    case "Done":
+      return <CircleCheck />;
+    case "Canceled":
+      return <CircleX />;
 
     default:
       return <CircleHelp />;

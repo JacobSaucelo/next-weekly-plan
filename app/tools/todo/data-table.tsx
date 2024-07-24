@@ -22,11 +22,67 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  Circle,
+  CircleCheck,
+  CircleHelp,
+  CircleX,
+  Timer,
+  X,
+} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
+type FilterStatusType = {
+  Title: string;
+  Value: string;
+  Variant?:
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
+  Icon: any;
+};
+
+const FilterStatusData: FilterStatusType[] = [
+  {
+    Title: "Backlog",
+    Value: "Backlog",
+    Icon: <CircleHelp />,
+  },
+  {
+    Title: "Todo",
+    Value: "Todo",
+    Icon: <Circle />,
+  },
+  {
+    Title: "In Progress",
+    Value: "In Progress",
+    Icon: <Timer />,
+  },
+  {
+    Title: "Done",
+    Value: "Done",
+    Icon: <CircleCheck />,
+  },
+  {
+    Title: "Canceled",
+    Value: "Canceled",
+    Icon: <CircleX />,
+  },
+  {
+    Title: "Clear",
+    Value: "",
+    Variant: "ghost",
+    Icon: <X />,
+  },
+];
 
 export function DataTable<TData, TValue>({
   columns,
@@ -55,45 +111,20 @@ export function DataTable<TData, TValue>({
   return (
     <section>
       <div className="flex gap-1 flex-wrap items-center py-4">
-        <Button
-          size="sm"
-          onClick={(event) =>
-            table.getColumn("status")?.setFilterValue("pending")
-          }
-        >
-          pending
-        </Button>
-        <Button
-          size="sm"
-          onClick={(event) =>
-            table.getColumn("status")?.setFilterValue("processing")
-          }
-        >
-          processing
-        </Button>
-        <Button
-          size="sm"
-          onClick={(event) =>
-            table.getColumn("status")?.setFilterValue("success")
-          }
-        >
-          success
-        </Button>
-        <Button
-          size="sm"
-          onClick={(event) =>
-            table.getColumn("status")?.setFilterValue("failed")
-          }
-        >
-          failed
-        </Button>
-
-        <Button
-          size="sm"
-          onClick={(event) => table.getColumn("status")?.setFilterValue("")}
-        >
-          all
-        </Button>
+        {FilterStatusData.map((stat) => (
+          <Button
+            size="sm"
+            onClick={(event) =>
+              table.getColumn("status")?.setFilterValue(stat.Value)
+            }
+            key={stat.Title}
+            className="flex gap-1"
+            variant={stat.Variant}
+          >
+            {stat.Icon}
+            {stat.Title}
+          </Button>
+        ))}
       </div>
 
       <div className="rounded-md border">
