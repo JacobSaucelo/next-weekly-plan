@@ -43,6 +43,8 @@ export const useCountStore = create<State & Actions>((set) => ({
   tasks: defaultTasks,
   increment: (qty: number) => set((state) => ({ count: state.count + qty })),
   decrement: (qty: number) => set((state) => ({ count: state.count - qty })),
+  handleAddTask: (task: Task) =>
+    set((state) => ({ tasks: [...state.tasks, task] })),
   handleRemoveTask: (taskId: string) =>
     set((state) => {
       const filteredTasks = state.tasks.filter((task) => task.id !== taskId);
