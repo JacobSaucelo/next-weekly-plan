@@ -11,7 +11,7 @@ type Actions = {
   handleRemoveTask: (taskId: string) => void;
 };
 
-type Task = {
+export type Task = {
   id: string;
   status: "Backlog" | "Todo" | "In Progress" | "Done" | "Canceled";
   title: string;

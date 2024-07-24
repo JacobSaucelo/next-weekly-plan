@@ -2,7 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import {
-  ArrowUpDown,
   MoreHorizontal,
   ArrowUp,
   ArrowDown,
