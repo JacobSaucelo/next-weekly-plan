@@ -12,8 +12,15 @@ import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
 import { DataTable } from "./data-table";
 import { columns, Payment } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useStore } from "zustand";
+import { useCountStore } from "./Store.todo";
+import { Button } from "@/components/ui/button";
 
 const ToolsTodo = () => {
+  const counter = useCountStore((state) => state.count);
+  const add = useCountStore((state) => state.increment);
+  const min = useCountStore((state) => state.decrement);
+
   const [tasks, setTasks] = useState<Payment[]>([
     {
       id: "728ed52f",
@@ -59,7 +66,11 @@ const ToolsTodo = () => {
           <TabsContent value="tasks">
             <DataTable columns={columns} data={tasks} />
           </TabsContent>
-          <TabsContent value="create"></TabsContent>
+          <TabsContent value="create">
+            <h6>{counter}</h6>
+            <Button onClick={() => add(1)}>Add</Button>
+            <Button onClick={() => min(1)}>Min</Button>
+          </TabsContent>
         </Tabs>
       </aside>
     </main>
