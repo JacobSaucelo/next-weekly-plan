@@ -46,7 +46,7 @@ const ToolsTodo = () => {
         <ReusablesBreadCrumb
           BasePage="Home"
           CurrentPage="todo"
-          ListPage={["tools", "Asdfas", "vcx", "hbvcv"]}
+          ListPage={["tools"]}
         />
         <ReusablesMainHeader Title="" Subtitle="" />
         <ReusablesDivider isVertical={false} />

@@ -74,14 +74,14 @@ const ReusablesBreadCrumb = ({
         </BreadcrumbItem>
         {ListPage.length > 0 &&
           ListPage.map((route, index) => (
-            <>
+            <React.Fragment key={index}>
               <BreadcrumbSeparator />
-              <BreadcrumbItem key={index}>
+              <BreadcrumbItem>
                 <BreadcrumbLink href={route} className="capitalize">
                   {route}
                 </BreadcrumbLink>
               </BreadcrumbItem>
-            </>
+            </React.Fragment>
           ))}
         <BreadcrumbSeparator />
         <BreadcrumbItem>
