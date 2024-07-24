@@ -6,6 +6,7 @@ import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
 import { DataTable } from "./data-table";
 import { columns, Payment } from "./columns";
+import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
 
 async function getData(): Promise<Payment[]> {
   return [
@@ -108,7 +109,8 @@ const ToolsTodo = async () => {
   return (
     <main className={styles.TodoPageContainer}>
       <aside className={`${styles.TodoPageSideContent} border-r`}>
-        <PrimitivesNavbar />
+        {/* <PrimitivesNavbar /> */}
+        <PrimitivesSidebar />
       </aside>
       <aside className={styles.TodoPageMainContent}>
         <ReusablesBreadCrumb
