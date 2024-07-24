@@ -159,11 +159,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <section>
-      <article className="flex flex-col gap-2 mt-3 mb-4">
-        {/* <div className="flex gap-1 flex-wrap items-center">
+      <article className="flex flex-col gap-2 mt-3">
+        <div className="flex gap-1 flex-wrap items-center">
           {FilterStatusData.map((stat) => (
             <Button
-              size="sm"
+              size="default"
               onClick={(event) =>
                 table.getColumn("status")?.setFilterValue(stat.Value)
               }
@@ -181,7 +181,7 @@ export function DataTable<TData, TValue>({
             <Button
               size="sm"
               onClick={(event) =>
-                table.getColumn("status")?.setFilterValue(stat.Value)
+                table.getColumn("priority")?.setFilterValue(stat.Value)
               }
               key={stat.Title}
               className="flex gap-1"
@@ -191,17 +191,19 @@ export function DataTable<TData, TValue>({
               {stat.Title}
             </Button>
           ))}
-        </div> */}
+        </div>
       </article>
 
-      <article>
-        <p>{data.length} Results</p>
+      <article className="flex items-center justify-between">
+        <p className="text-lg font-semibold px-2">
+          {data.length} Results found
+        </p>
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter tasks"
-            value={(table.getColumn("Title")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter tasks by title"
+            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("Title")?.setFilterValue(event.target.value)
+              table.getColumn("title")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
