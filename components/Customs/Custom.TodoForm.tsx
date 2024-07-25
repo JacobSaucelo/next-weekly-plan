@@ -41,6 +41,8 @@ const ToolsTodo = () => {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("data:", data);
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -76,6 +78,32 @@ const ToolsTodo = () => {
               <FormDescription>
                 This is your public display name.
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
