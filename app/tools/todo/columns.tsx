@@ -26,16 +26,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import { Task as TaskType } from "./Store.todo";
 
-export type Payment = {
-  id: string;
-  status: "Backlog" | "Todo" | "In Progress" | "Done" | "Canceled";
-  title: string;
-  priority: "Low" | "Medium" | "High";
-  label?: "Bug" | "Feature" | "Documentation" | "Backend" | "UI";
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<TaskType>[] = [
   {
     accessorKey: "id",
     header: "Task",
@@ -85,7 +78,7 @@ export const columns: ColumnDef<Payment>[] = [
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label}</Badge>}
           <span className="max-w-[450px] truncate font-medium">
-            {row.getValue("title")}
+            {row.getValue("title")}-{row.original.createdDate}
           </span>
         </div>
       );

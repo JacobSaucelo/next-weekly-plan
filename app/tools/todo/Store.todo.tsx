@@ -18,6 +18,8 @@ export type Task = {
   priority: "Low" | "Medium" | "High";
   label?: "Bug" | "Feature" | "Documentation" | "Backend" | "UI";
   description?: string;
+  createdDate: string;
+  updatedDate?: string;
 };
 
 const defaultTasks: Task[] = [
@@ -28,6 +30,7 @@ const defaultTasks: Task[] = [
     status: "Backlog",
     priority: "Low",
     label: "Bug",
+    createdDate: Date.now().toString(),
   },
   {
     id: "728ed52f",
@@ -35,6 +38,7 @@ const defaultTasks: Task[] = [
     status: "Todo",
     priority: "High",
     label: "Documentation",
+    createdDate: Date.now().toString(),
   },
 ];
 

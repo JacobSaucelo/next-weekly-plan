@@ -11,7 +11,7 @@ import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
 import CustomTodoForm from "@/components/Customs/Custom.TodoForm";
 
 import { DataTable } from "./data-table";
-import { columns, Payment } from "./columns";
+import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useStore } from "zustand";
 import { useCountStore, Task as TaskType } from "./Store.todo";
@@ -24,7 +24,7 @@ const ToolsTodo = () => {
   const min = useCountStore((state) => state.decrement);
   const addTask = useCountStore((state) => state.handleAddTask);
 
-  // const [tasks, setTasks] = useState<Payment[]>([
+  // const [tasks, setTasks] = useState<TaskType[]>([
   //   {
   //     id: "728ed52f",
   //     title:
@@ -49,6 +49,7 @@ const ToolsTodo = () => {
     priority: "Medium",
     status: "Todo",
     label: "Feature",
+    createdDate: Date.now().toString(),
   };
 
   return (

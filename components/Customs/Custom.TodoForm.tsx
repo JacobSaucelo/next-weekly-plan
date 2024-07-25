@@ -21,6 +21,12 @@ const FormSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  title: z.string().min(10, {
+    message: "Title must be at least 10 characters.",
+  }),
+  description: z.string().min(30, {
+    message: "Description must be at least 30 characters.",
+  }),
 });
 
 const ToolsTodo = () => {
