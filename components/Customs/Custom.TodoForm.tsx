@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -27,8 +28,12 @@ const FormSchema = z.object({
   description: z.string().min(30, {
     message: "Description must be at least 30 characters.",
   }),
-  status: z.enum(["Backlog", "Todo", "In Progress", "Done", "Canceled"]),
-  priority: z.enum(["Low", "Medium", "High"]),
+  status: z.enum(["Backlog", "Todo", "In Progress", "Done", "Canceled"], {
+    required_error: "Status is a required field.",
+  }),
+  priority: z.enum(["Low", "Medium", "High"], {
+    required_error: "Priority is a required field.",
+  }),
   label: z.enum(["Bug", "Feature", "Documentation", "Backend", "UI"]),
 });
 
@@ -97,12 +102,12 @@ const ToolsTodo = () => {
         />
         <FormField
           control={form.control}
-          name="title"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>description</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Textarea placeholder="shadcn" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
