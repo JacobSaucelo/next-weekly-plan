@@ -31,9 +31,6 @@ import {
 } from "@/app/tools/todo/Store.todo";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
   title: z.string().min(10, {
     message: "Title must be at least 10 characters.",
   }),
@@ -52,9 +49,6 @@ const FormSchema = z.object({
 const ToolsTodo = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: "",
-    },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -83,22 +77,6 @@ const ToolsTodo = () => {
         Show Toast
       </Button>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="title"
@@ -138,7 +116,65 @@ const ToolsTodo = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {FilterStatusData.map((statusItem, index) => (
+                  {FilterStatusData.filter(
+                    (stat) => stat.Value && stat.Value.length > 1
+                  ).map((statusItem) => (
+                    <SelectItem value={statusItem.Value} key={statusItem.Value}>
+                      <div className="flex items-center gap-2 ">
+                        {statusItem.Icon}
+                        {statusItem.Title}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="priority"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Priority</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a status for your task" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {FilterPriorityData.filter(
+                    (stat) => stat.Value && stat.Value.length > 1
+                  ).map((statusItem) => (
+                    <SelectItem value={statusItem.Value} key={statusItem.Value}>
+                      <div className="flex items-center gap-2 ">
+                        {statusItem.Icon}
+                        {statusItem.Title}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="label"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Priority</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a label for your task" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {LabelData.map((statusItem, index) => (
                     <SelectItem value={statusItem} key={statusItem + index}>
                       {statusItem}
                     </SelectItem>
