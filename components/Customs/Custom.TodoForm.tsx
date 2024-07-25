@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -43,7 +44,9 @@ const FormSchema = z.object({
   priority: z.enum(["Low", "Medium", "High"], {
     required_error: "Priority is a required field.",
   }),
-  label: z.enum(["Bug", "Feature", "Documentation", "Backend", "UI"]),
+  label: z
+    .enum(["Bug", "Feature", "Documentation", "Backend", "UI"])
+    .optional(),
 });
 
 const ToolsTodo = () => {
@@ -95,7 +98,7 @@ const ToolsTodo = () => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>description</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea placeholder="shadcn" {...field} />
               </FormControl>
@@ -166,7 +169,7 @@ const ToolsTodo = () => {
           name="label"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Priority</FormLabel>
+              <FormLabel>Task Label</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -176,11 +179,17 @@ const ToolsTodo = () => {
                 <SelectContent>
                   {LabelData.map((statusItem, index) => (
                     <SelectItem value={statusItem} key={statusItem + index}>
-                      {statusItem}
+                      <div>
+                        <Badge variant="outline">{statusItem}</Badge>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              <FormDescription>
+                Task labels are optional, you can submit your task without any
+                labels.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
