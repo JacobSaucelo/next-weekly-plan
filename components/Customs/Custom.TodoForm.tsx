@@ -27,6 +27,9 @@ const FormSchema = z.object({
   description: z.string().min(30, {
     message: "Description must be at least 30 characters.",
   }),
+  status: z.enum(["Backlog", "Todo", "In Progress", "Done", "Canceled"]),
+  priority: z.enum(["Low", "Medium", "High"]),
+  label: z.enum(["Bug", "Feature", "Documentation", "Backend", "UI"]),
 });
 
 const ToolsTodo = () => {

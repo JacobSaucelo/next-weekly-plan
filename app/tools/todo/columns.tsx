@@ -78,7 +78,7 @@ export const columns: ColumnDef<TaskType>[] = [
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label}</Badge>}
           <span className="max-w-[450px] truncate font-medium">
-            {row.getValue("title")}-{row.original.createdDate}
+            {row.getValue("title")}
           </span>
         </div>
       );
