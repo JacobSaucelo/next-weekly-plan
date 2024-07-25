@@ -1,10 +1,11 @@
 "use client";
 
+import styles from "./Custom.TodoForm.module.css";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import {
   FilterStatusData,
   FilterPriorityData,
@@ -69,48 +72,60 @@ const ToolsTodo = () => {
 
   return (
     <Form {...form}>
-      <Button
-        onClick={() => {
-          toast({
-            title: "Scheduled: Catch up",
-            description: "Friday, February 10, 2023 at 5:57 PM",
-          });
-        }}
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-2 mt-4"
       >
-        Show Toast
-      </Button>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-1">
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  placeholder="Work on the frontend part, Commit new changes, delete unused..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="description"
+          name="label"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder="shadcn" {...field} />
-              </FormControl>
+            <FormItem className="col-span-1">
+              <FormLabel>Task Label</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a label for your task" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {LabelData.map((statusItem, index) => (
+                    <SelectItem value={statusItem} key={statusItem + index}>
+                      <div>
+                        <Badge variant="outline">{statusItem}</Badge>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>Task labels are optional.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="status"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-1">
               <FormLabel>Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -139,7 +154,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="priority"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-1">
               <FormLabel>Priority</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -164,37 +179,27 @@ const ToolsTodo = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="label"
+          name="description"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Task Label</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a label for your task" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {LabelData.map((statusItem, index) => (
-                    <SelectItem value={statusItem} key={statusItem + index}>
-                      <div>
-                        <Badge variant="outline">{statusItem}</Badge>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Task labels are optional, you can submit your task without any
-                labels.
-              </FormDescription>
+            <FormItem className="col-span-2">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis, adipisci."
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        <Button type="submit" className="col-span-2 mt-2">
+          Submit
+        </Button>
       </form>
     </Form>
   );

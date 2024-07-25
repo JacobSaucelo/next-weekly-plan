@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useStore } from "zustand";
 import { useCountStore, Task as TaskType } from "./Store.todo";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 const ToolsTodo = () => {
   const tasks = useCountStore((state) => state.tasks);
@@ -23,24 +24,6 @@ const ToolsTodo = () => {
   const add = useCountStore((state) => state.increment);
   const min = useCountStore((state) => state.decrement);
   const addTask = useCountStore((state) => state.handleAddTask);
-
-  // const [tasks, setTasks] = useState<TaskType[]>([
-  //   {
-  //     id: "728ed52f",
-  //     title:
-  //       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. At expedita delectus quod optio fuga consequatur!",
-  //     status: "Backlog",
-  //     priority: "Low",
-  //     label: "Bug",
-  //   },
-  //   {
-  //     id: "728ed52f",
-  //     title: "Lorem, ipsum dolor sit fuga consequatur!",
-  //     status: "Todo",
-  //     priority: "High",
-  //     label: "Documentation",
-  //   },
-  // ]);
 
   const TestTask: TaskType = {
     id: "Asdfasd",
@@ -68,18 +51,19 @@ const ToolsTodo = () => {
         <Tabs defaultValue="tasks">
           <TabsList>
             <TabsTrigger value="tasks">Tasks</TabsTrigger>
-            <TabsTrigger value="create">New Tasks</TabsTrigger>
+            <TabsTrigger value="create">
+              <Plus className="me-1" /> New Tasks
+            </TabsTrigger>
           </TabsList>
           <ReusablesDivider isVertical={false} />
           <TabsContent value="tasks">
             <DataTable columns={columns} data={tasks} />
           </TabsContent>
           <TabsContent value="create">
-            <h6>{counter}</h6>
+            {/* <h6>{counter}</h6>
             <Button onClick={() => add(1)}>Add</Button>
             <Button onClick={() => min(1)}>Min</Button>
-            <Button onClick={() => addTask(TestTask)}> Add Tasks</Button>
-            <hr />
+            <Button onClick={() => addTask(TestTask)}> Add Tasks</Button> */}
             <CustomTodoForm />
           </TabsContent>
         </Tabs>
