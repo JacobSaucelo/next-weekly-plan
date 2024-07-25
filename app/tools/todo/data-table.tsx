@@ -23,115 +23,12 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Circle,
-  CircleCheck,
-  CircleHelp,
-  CircleX,
-  Timer,
-  X,
-  ArrowUp,
-  ArrowDown,
-  ArrowRight,
-} from "lucide-react";
+import { FilterPriorityData, FilterStatusData } from "./Store.todo";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
-type FilterStatusType = {
-  Title: string;
-  Value: "Backlog" | "Todo" | "In Progress" | "Done" | "Canceled" | "";
-  Variant?:
-    | "link"
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | null
-    | undefined;
-  Icon: any;
-};
-type FilterPriorityType = {
-  Title: string;
-  Value: "Low" | "Medium" | "High" | "";
-  Variant?:
-    | "link"
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | null
-    | undefined;
-  Icon: any;
-};
-
-const FilterStatusData: FilterStatusType[] = [
-  {
-    Title: "Backlog",
-    Value: "Backlog",
-    Variant: "outline",
-    Icon: <CircleHelp className="text-gray-400" />,
-  },
-  {
-    Title: "Todo",
-    Value: "Todo",
-    Variant: "outline",
-    Icon: <Circle className="text-blue-400" />,
-  },
-  {
-    Title: "In Progress",
-    Value: "In Progress",
-    Variant: "outline",
-    Icon: <Timer className="text-yellow-400" />,
-  },
-  {
-    Title: "Done",
-    Value: "Done",
-    Variant: "outline",
-    Icon: <CircleCheck className="text-green-400" />,
-  },
-  {
-    Title: "Canceled",
-    Value: "Canceled",
-    Variant: "outline",
-    Icon: <CircleX className="text-red-700" />,
-  },
-  {
-    Title: "Clear",
-    Value: "",
-    Variant: "ghost",
-    Icon: <X />,
-  },
-];
-const FilterPriorityData: FilterPriorityType[] = [
-  {
-    Title: "High",
-    Value: "High",
-    Variant: "outline",
-    Icon: <ArrowUp className="text-red-700" />,
-  },
-  {
-    Title: "Medium",
-    Value: "Medium",
-    Variant: "outline",
-    Icon: <ArrowRight className="text-yellow-400" />,
-  },
-  {
-    Title: "Low",
-    Value: "Low",
-    Variant: "outline",
-    Icon: <ArrowDown className="text-blue-400" />,
-  },
-  {
-    Title: "Clear",
-    Value: "",
-    Variant: "ghost",
-    Icon: <X />,
-  },
-];
 
 export function DataTable<TData, TValue>({
   columns,

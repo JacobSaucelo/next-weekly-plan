@@ -17,6 +17,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FilterStatusData,
+  FilterPriorityData,
+  LabelData,
+} from "@/app/tools/todo/Store.todo";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -109,6 +121,30 @@ const ToolsTodo = () => {
               <FormControl>
                 <Textarea placeholder="shadcn" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Status</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a status for your task" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {FilterStatusData.map((statusItem, index) => (
+                    <SelectItem value={statusItem} key={statusItem + index}>
+                      {statusItem}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
