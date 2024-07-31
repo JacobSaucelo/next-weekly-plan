@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Task as TaskType } from "./Store.todo";
+import Link from "next/link";
 
 export const columns: ColumnDef<TaskType>[] = [
   {
@@ -77,9 +78,11 @@ export const columns: ColumnDef<TaskType>[] = [
       return (
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label}</Badge>}
-          <span className="max-w-[450px] truncate font-medium">
-            {row.getValue("title")}
-          </span>
+          <Link href={`/tools/todo/${row.original.id}`}>
+            <span className="max-w-[450px] truncate font-medium">
+              {row.getValue("title")}
+            </span>
+          </Link>
         </div>
       );
     },
