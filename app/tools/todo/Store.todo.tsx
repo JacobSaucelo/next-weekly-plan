@@ -32,7 +32,7 @@ export type Task = {
   label?: "Bug" | "Feature" | "Documentation" | "Backend" | "UI";
   description?: string;
   createdDate: string;
-  updatedDate?: string;
+  updatedDate?: string | null;
 };
 
 export type FilterStatusType = {

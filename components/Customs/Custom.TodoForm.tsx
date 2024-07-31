@@ -4,7 +4,9 @@ import styles from "./Custom.TodoForm.module.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { date, z } from "zod";
+import { supabase } from "@/lib/initSupabase";
+import { Task as TaskType } from "@/app/tools/todo/Store.todo";
 
 import {
   Form,
@@ -33,6 +35,7 @@ import {
   FilterPriorityData,
   LabelData,
 } from "@/app/tools/todo/Store.todo";
+import { useState } from "react";
 
 const FormSchema = z.object({
   title: z.string().min(10, {
@@ -53,22 +56,42 @@ const FormSchema = z.object({
 });
 
 const ToolsTodo = () => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data:", data);
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setIsSubmitting(true);
+
+    const submitFormData: TaskType = {
+      id: "13",
+      status: data.status,
+      title: data.title,
+      priority: data.priority,
+      label: data.label,
+      description: data.description,
+      createdDate: Date.now().toString(),
+      updatedDate: null,
+    };
+
+    // const { data: resData, error } = await supabase
+    //   .from("Tasks")
+    //   .insert([{}])
+    //   .select();
 
     toast({
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(submitFormData, null, 2)}
+          </code>
         </pre>
       ),
     });
-  }
+  };
 
   return (
     <Form {...form}>
@@ -85,6 +108,7 @@ const ToolsTodo = () => {
               <FormControl>
                 <Input
                   placeholder="Work on the frontend part, Commit new changes, delete unused..."
+                  disabled={isSubmitting ? true : false}
                   {...field}
                 />
               </FormControl>
@@ -99,7 +123,11 @@ const ToolsTodo = () => {
           render={({ field }) => (
             <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Task Label</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isSubmitting ? true : false}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a label for your task" />
@@ -127,7 +155,11 @@ const ToolsTodo = () => {
           render={({ field }) => (
             <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isSubmitting ? true : false}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a status for your task" />
@@ -156,7 +188,11 @@ const ToolsTodo = () => {
           render={({ field }) => (
             <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Priority</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isSubmitting ? true : false}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a status for your task" />
@@ -190,6 +226,7 @@ const ToolsTodo = () => {
                 <Textarea
                   className="h-[80%]"
                   placeholder="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis, adipisci."
+                  disabled={isSubmitting ? true : false}
                   {...field}
                 />
               </FormControl>
@@ -198,8 +235,12 @@ const ToolsTodo = () => {
           )}
         />
 
-        <Button type="submit" className="col-span-2 mt-4">
-          Submit
+        <Button
+          type="submit"
+          className="col-span-2 mt-4"
+          disabled={isSubmitting ? true : false}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Form>
