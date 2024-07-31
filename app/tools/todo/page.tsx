@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.page.module.css";
 
 import PrimitivesNavbar from "@/components/Primitives/Primitives.Navbar";
@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCountStore, Task as TaskType } from "./Store.todo";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { supabase } from "@/lib/initSupabase";
 
 const ToolsTodo = () => {
   const tasks = useCountStore((state) => state.tasks);
@@ -25,6 +26,10 @@ const ToolsTodo = () => {
   const addTask = useCountStore((state) => state.handleAddTask);
   const setTasks = useCountStore((state) => state.handleSetTasks);
 
+  useEffect(() => {
+    handleGetTasks();
+  }, []);
+
   const TestTask: TaskType = {
     id: "Asdfasd",
     title: "test title",
@@ -33,6 +38,15 @@ const ToolsTodo = () => {
     status: "Todo",
     label: "Feature",
     createdDate: Date.now().toString(),
+  };
+
+  const handleGetTasks = async () => {
+    const { data, error } = await supabase
+      .from("Tasks")
+      .select("*")
+      .range(0, 9);
+
+    setTasks(data as TaskType[]);
   };
 
   return (
