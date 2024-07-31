@@ -80,7 +80,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="col-span-1">
+            <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input
@@ -97,7 +97,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="label"
           render={({ field }) => (
-            <FormItem className="col-span-1">
+            <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Task Label</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -125,7 +125,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="status"
           render={({ field }) => (
-            <FormItem className="col-span-1">
+            <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -154,7 +154,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="priority"
           render={({ field }) => (
-            <FormItem className="col-span-1">
+            <FormItem className="col-span-2 md:col-span-1">
               <FormLabel>Priority</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -184,7 +184,7 @@ const ToolsTodo = () => {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="col-start-2 col-span-1 row-start-1 row-span-4 border-l ps-2">
+            <FormItem className="col-span-2 row-start-auto md:col-start-2 md:col-span-1 md:row-start-1 md:row-span-4 md:border-l md:ps-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
