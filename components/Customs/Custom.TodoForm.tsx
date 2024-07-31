@@ -76,10 +76,20 @@ const ToolsTodo = () => {
       updatedDate: null,
     };
 
-    // const { data: resData, error } = await supabase
-    //   .from("Tasks")
-    //   .insert([{}])
-    //   .select();
+    const { data: resData, error } = await supabase
+      .from("Tasks")
+      .insert([{ asdfasdfasdf: "asdfasfdas" }])
+      .select();
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem submitting your request.",
+      });
+
+      setIsSubmitting(false);
+      return;
+    }
 
     toast({
       title: "You submitted the following values:",
