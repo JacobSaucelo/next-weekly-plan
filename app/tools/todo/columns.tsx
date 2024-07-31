@@ -145,14 +145,14 @@ export const columns: ColumnDef<TaskType>[] = [
 const handlePriorityIcons = (icon: string) => {
   switch (icon) {
     case "Low":
-      return <ArrowDown />;
+      return <ArrowDown className="text-blue-400" />;
     case "Medium":
-      return <ArrowRight />;
+      return <ArrowRight className="text-yellow-400" />;
     case "High":
-      return <ArrowUp />;
+      return <ArrowUp className="text-red-700" />;
 
     default:
-      return <CircleHelp />;
+      return <CircleHelp className="text-gray-400" />;
   }
 };
 const handleStatusIcons = (icon: string) => {

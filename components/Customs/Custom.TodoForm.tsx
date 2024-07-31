@@ -4,7 +4,7 @@ import styles from "./Custom.TodoForm.module.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { date, z } from "zod";
+import { z } from "zod";
 import { supabase } from "@/lib/initSupabase";
 import { Task as TaskType } from "@/app/tools/todo/Store.todo";
 
@@ -36,6 +36,7 @@ import {
   LabelData,
 } from "@/app/tools/todo/Store.todo";
 import { useState } from "react";
+import ReusablesSpinner from "../Reusables/Reusables.Spinner";
 
 const FormSchema = z.object({
   title: z.string().min(10, {
@@ -60,25 +61,27 @@ const ToolsTodo = () => {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      title: "",
+    },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
 
     const submitFormData: TaskType = {
-      id: "13",
       status: data.status,
       title: data.title,
       priority: data.priority,
       label: data.label,
       description: data.description,
-      createdDate: Date.now().toString(),
+      createdDate: new Date().toISOString(),
       updatedDate: null,
     };
 
     const { data: resData, error } = await supabase
       .from("Tasks")
-      .insert([{ asdfasdfasdf: "asdfasfdas" }])
+      .insert([submitFormData])
       .select();
     if (error) {
       toast({
@@ -87,20 +90,23 @@ const ToolsTodo = () => {
         description: "There was a problem submitting your request.",
       });
 
+      console.log(error);
       setIsSubmitting(false);
       return;
     }
 
+    console.log("resData: ", resData);
     toast({
-      title: "You submitted the following values:",
+      title: "Success",
       description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(submitFormData, null, 2)}
-          </code>
-        </pre>
+        <p>
+          Your task{" "}
+          <span className="font-semibold">&quot;{data.title}&quot;</span> has
+          been created please wait.
+        </p>
       ),
     });
+    setIsSubmitting(false);
   };
 
   return (
@@ -250,7 +256,14 @@ const ToolsTodo = () => {
           className="col-span-2 mt-4"
           disabled={isSubmitting ? true : false}
         >
-          {isSubmitting ? "Submitting..." : "Submit"}
+          {isSubmitting ? (
+            <>
+              <ReusablesSpinner SpinnerSize={10} />
+              <p>Submitting...</p>
+            </>
+          ) : (
+            "Submit"
+          )}
         </Button>
       </form>
     </Form>

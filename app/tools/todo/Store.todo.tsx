@@ -25,7 +25,7 @@ type Actions = {
 };
 
 export type Task = {
-  id: string;
+  id?: string;
   status: "Backlog" | "Todo" | "In Progress" | "Done" | "Canceled";
   title: string;
   priority: "Low" | "Medium" | "High";

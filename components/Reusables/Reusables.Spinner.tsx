@@ -1,12 +1,15 @@
 import { LoaderCircle } from "lucide-react";
 
 type SpinnerType = {
-  SpinnerSize: string;
+  SpinnerSize: number;
 };
 
 const ReusablesSpinner = ({ SpinnerSize }: SpinnerType) => {
   return (
-    <LoaderCircle className="animate-spin" style={{ fontSize: SpinnerSize }} />
+    <LoaderCircle
+      className="animate-spin"
+      style={{ fontSize: SpinnerSize + "px" }}
+    />
   );
 };
 
