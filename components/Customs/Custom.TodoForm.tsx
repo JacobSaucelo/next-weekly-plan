@@ -184,10 +184,11 @@ const ToolsTodo = () => {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="col-span-2">
+            <FormItem className="col-start-2 col-span-1 row-start-1 row-span-4 border-l ps-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
+                  className="h-[80%]"
                   placeholder="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis, adipisci."
                   {...field}
                 />
@@ -197,7 +198,7 @@ const ToolsTodo = () => {
           )}
         />
 
-        <Button type="submit" className="col-span-2 mt-2">
+        <Button type="submit" className="col-span-2 mt-4">
           Submit
         </Button>
       </form>
