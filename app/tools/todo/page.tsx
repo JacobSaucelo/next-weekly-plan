@@ -13,7 +13,6 @@ import CustomTodoForm from "@/components/Customs/Custom.TodoForm";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useStore } from "zustand";
 import { useCountStore, Task as TaskType } from "./Store.todo";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -24,6 +23,7 @@ const ToolsTodo = () => {
   const add = useCountStore((state) => state.increment);
   const min = useCountStore((state) => state.decrement);
   const addTask = useCountStore((state) => state.handleAddTask);
+  const setTasks = useCountStore((state) => state.handleSetTasks);
 
   const TestTask: TaskType = {
     id: "Asdfasd",

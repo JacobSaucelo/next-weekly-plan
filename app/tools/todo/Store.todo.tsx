@@ -21,6 +21,7 @@ type Actions = {
   decrement: (qty: number) => void;
   handleAddTask: (task: Task) => void;
   handleRemoveTask: (taskId: string) => void;
+  handleSetTasks: (data: Task[]) => void;
 };
 
 export type Task = {
@@ -163,4 +164,5 @@ export const useCountStore = create<State & Actions>((set) => ({
         tasks: filteredTasks,
       };
     }),
+  handleSetTasks: (data: Task[]) => set((state) => ({ tasks: data })),
 }));
