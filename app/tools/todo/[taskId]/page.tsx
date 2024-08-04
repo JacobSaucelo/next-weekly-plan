@@ -3,8 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/initSupabase";
-import { Task, Task as TaskType } from "../Store.todo";
+import {
+  FilterStatusData,
+  FilterPriorityData,
+  LabelData,
+  Task as TaskType,
+} from "../Store.todo";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -57,62 +63,60 @@ const TaskPage = () => {
 
   return (
     <main>
-      <p className="border">{pageData.id}</p>
+      <p className="border">id: {pageData.id}</p>
       <p className="border">{pageData.status}</p>
       <p className="border">{pageData.title}</p>
       <p className="border">{pageData.priority}</p>
       <p className="border">{pageData.label}</p>
-      <p className="whitespace-pre-wrap border">{pageData.description}</p>
+      <Textarea
+        className="whitespace-pre-wrap"
+        value={pageData.description}
+        disabled
+      />
+
+      {/* <p className="whitespace-pre-wrap border">{pageData.description}</p> */}
       <p className="border">{pageData.createdDate}</p>
       <p className="border">{pageData.updatedDate}</p>
 
       <hr />
 
       <h5>Status</h5>
-      <Button onClick={() => handleChangeSelects("status", "Backlog")}>
-        Backlog
-      </Button>
-      <Button onClick={() => handleChangeSelects("status", "Todo")}>
-        Todo
-      </Button>
-      <Button onClick={() => handleChangeSelects("status", "In Progress")}>
-        In Progress
-      </Button>
-      <Button onClick={() => handleChangeSelects("status", "Done")}>
-        Done
-      </Button>
-      <Button onClick={() => handleChangeSelects("status", "Canceled")}>
-        Canceled
-      </Button>
+      {FilterStatusData.filter((s) => s.Value !== "").map((statusItem) => (
+        <Button
+          className="flex flex-row gap-2"
+          onClick={() => handleChangeSelects("status", statusItem.Value)}
+          key={statusItem.Value}
+        >
+          {statusItem.Icon}
+          {statusItem.Title}
+        </Button>
+      ))}
 
       <hr />
       <h5>priority</h5>
-      <Button onClick={() => handleChangeSelects("priority", "Low")}>
-        Low
-      </Button>
-      <Button onClick={() => handleChangeSelects("priority", "Medium")}>
-        Medium
-      </Button>
-      <Button onClick={() => handleChangeSelects("priority", "High")}>
-        High
-      </Button>
+      {FilterPriorityData.filter((p) => p.Value !== "").map((priorityItem) => (
+        <Button
+          className="flex flex-row gap-2"
+          onClick={() => handleChangeSelects("priority", priorityItem.Value)}
+          key={priorityItem.Value}
+        >
+          {priorityItem.Icon}
+          {priorityItem.Title}
+        </Button>
+      ))}
 
       <hr />
       <h5>label</h5>
-      <Button onClick={() => handleChangeSelects("label", "Bug")}>Bug</Button>
-      <Button onClick={() => handleChangeSelects("label", "Feature")}>
-        Feature
-      </Button>
-      <Button onClick={() => handleChangeSelects("label", "Documentation")}>
-        Documentation
-      </Button>
-      <Button onClick={() => handleChangeSelects("label", "Backend")}>
-        Backend
-      </Button>
-      <Button onClick={() => handleChangeSelects("label", "UI")}>UI</Button>
+      {LabelData.map((priorityItem) => (
+        <Button
+          onClick={() => handleChangeSelects("label", priorityItem)}
+          key={priorityItem}
+        >
+          {priorityItem}
+        </Button>
+      ))}
 
       <hr />
-
       <Button onClick={handleSubmit}>Submit</Button>
     </main>
   );
