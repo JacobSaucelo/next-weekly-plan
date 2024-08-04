@@ -47,6 +47,10 @@ const TaskPage = () => {
     setPageData({ ...pageData, [name]: value });
   };
 
+  const handleSubmit = () => {
+    console.log("pageData : ", pageData);
+  };
+
   if (isFetching) {
     return <section>Loading...</section>;
   }
@@ -106,6 +110,10 @@ const TaskPage = () => {
         Backend
       </Button>
       <Button onClick={() => handleChangeSelects("label", "UI")}>UI</Button>
+
+      <hr />
+
+      <Button onClick={handleSubmit}>Submit</Button>
     </main>
   );
 };
