@@ -11,6 +11,7 @@ import {
 } from "../Store.todo";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import ReusablesToolsTodoCard from "@/components/Reusables/Reusables.Tools.Todo.Card";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -63,6 +64,8 @@ const TaskPage = () => {
 
   return (
     <main>
+      <ReusablesToolsTodoCard Task={pageData} />
+
       <p className="border">id: {pageData.id}</p>
       <p className="border">{pageData.status}</p>
       <p className="border">{pageData.title}</p>
