@@ -1,0 +1,21 @@
+.TodoTaskContainer {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.TodoTaskSideContent {
+  grid-column: 1 / span 2;
+  /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
+  padding: 2rem 0.5rem;
+}
+
+.TodoTaskMainContent {
+  grid-column: 3 / span 12;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
