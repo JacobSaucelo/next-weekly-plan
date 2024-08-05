@@ -23,6 +23,7 @@ import { Plus } from "lucide-react";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -102,74 +103,100 @@ const TaskPage = () => {
                   <ReusablesToolsTodoCard Task={pageData} />
                 </section>
 
-                <hr />
-                <div>
-                  <Label htmlFor="TaskTitle">Title</Label>
-                  <Input
-                    type="text"
-                    id="TaskTitle"
-                    placeholder="Title"
-                    value={pageData.title}
-                  />
-                </div>
+                <Separator />
 
-                <hr />
-                <div>
-                  <Label htmlFor="TaskDescription">Task Description</Label>
-                  <Textarea
-                    placeholder="Task Description"
-                    id="TaskDescription"
-                    value={pageData.description}
-                  />
-                </div>
-                <hr />
+                <section className="grid grid-cols-3 gap-2">
+                  <aside className="col-span-2 flex flex-col gap-2 p-2">
+                    <div>
+                      <Label htmlFor="TaskTitle">Title</Label>
+                      <Input
+                        type="text"
+                        id="TaskTitle"
+                        placeholder="Title"
+                        value={pageData.title}
+                      />
+                    </div>
 
-                <Label>Status</Label>
-                {FilterStatusData.filter((s) => s.Value !== "").map(
-                  (statusItem) => (
-                    <Button
-                      className="flex flex-row gap-2"
-                      onClick={() =>
-                        handleChangeSelects("status", statusItem.Value)
-                      }
-                      key={statusItem.Value}
-                    >
-                      {statusItem.Icon}
-                      {statusItem.Title}
-                    </Button>
-                  )
-                )}
+                    <div>
+                      <Label htmlFor="TaskDescription">Task Description</Label>
+                      <Textarea
+                        className="h-[200px]"
+                        placeholder="Task Description"
+                        id="TaskDescription"
+                        value={pageData.description}
+                      />
+                    </div>
 
-                <hr />
-                <Label>Priority</Label>
-                {FilterPriorityData.filter((p) => p.Value !== "").map(
-                  (priorityItem) => (
-                    <Button
-                      className="flex flex-row gap-2"
-                      onClick={() =>
-                        handleChangeSelects("priority", priorityItem.Value)
-                      }
-                      key={priorityItem.Value}
-                    >
-                      {priorityItem.Icon}
-                      {priorityItem.Title}
-                    </Button>
-                  )
-                )}
+                    <Separator />
 
-                <hr />
-                <Label>Label</Label>
-                {LabelData.map((priorityItem) => (
-                  <Button
-                    onClick={() => handleChangeSelects("label", priorityItem)}
-                    key={priorityItem}
-                  >
-                    {priorityItem}
-                  </Button>
-                ))}
+                    <Button onClick={handleSubmit}>Submit</Button>
+                  </aside>
 
-                <hr />
-                <Button onClick={handleSubmit}>Submit</Button>
+                  <aside className="col-span-1 border-s">
+                    <div className="p-2">
+                      <Label>Status</Label>
+                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                        {FilterStatusData.filter((s) => s.Value !== "").map(
+                          (statusItem) => (
+                            <Button
+                              className="flex flex-row gap-2"
+                              onClick={() =>
+                                handleChangeSelects("status", statusItem.Value)
+                              }
+                              key={statusItem.Value}
+                            >
+                              {statusItem.Icon}
+                              {statusItem.Title}
+                            </Button>
+                          )
+                        )}
+                      </article>
+                    </div>
+
+                    <Separator />
+
+                    <div className="p-2">
+                      <Label>Priority</Label>
+                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                        {FilterPriorityData.filter((p) => p.Value !== "").map(
+                          (priorityItem) => (
+                            <Button
+                              className="flex flex-row gap-2"
+                              onClick={() =>
+                                handleChangeSelects(
+                                  "priority",
+                                  priorityItem.Value
+                                )
+                              }
+                              key={priorityItem.Value}
+                            >
+                              {priorityItem.Icon}
+                              {priorityItem.Title}
+                            </Button>
+                          )
+                        )}
+                      </article>
+                    </div>
+
+                    <Separator />
+
+                    <div className="p-2">
+                      <Label>Label</Label>
+                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                        {LabelData.map((priorityItem) => (
+                          <Button
+                            onClick={() =>
+                              handleChangeSelects("label", priorityItem)
+                            }
+                            key={priorityItem}
+                          >
+                            {priorityItem}
+                          </Button>
+                        ))}
+                      </article>
+                    </div>
+                  </aside>
+                </section>
               </TabsContent>
             </Tabs>
           </>
