@@ -23,7 +23,12 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FilterPriorityData, FilterStatusData } from "./Store.todo";
+import {
+  FilterPriorityData,
+  FilterStatusData,
+  useCountStore,
+} from "./Store.todo";
+import { LoaderCircle } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,6 +43,8 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
+  const isFetchingTaskList = useCountStore((state) => state.isFetchingTaskList);
 
   const table = useReactTable({
     data,
@@ -92,9 +99,16 @@ export function DataTable<TData, TValue>({
       </article>
 
       <article className="flex items-center justify-between">
-        <p className="text-lg font-semibold px-2">
-          {data.length} Results found
-        </p>
+        {isFetchingTaskList ? (
+          <div className="flex gap-1">
+            <p className="text-lg font-semibold px-2">Fetching</p>
+            <LoaderCircle className="animate-spin" />
+          </div>
+        ) : (
+          <p className="text-lg font-semibold px-2">
+            {data.length} Results found
+          </p>
+        )}
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter tasks by title"

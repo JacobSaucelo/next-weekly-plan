@@ -63,7 +63,7 @@ const PrimitivesSidebar = () => {
         </h3>
         <ul className="text-lg ps-2">
           <li className="flex items-center gap-2 font-semibold">
-            Toggle Theme
+            Theme
             <ReusablesThemeToggler />
           </li>
         </ul>

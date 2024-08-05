@@ -58,6 +58,7 @@ const FormSchema = z.object({
 
 const ToolsTodo = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -95,7 +96,6 @@ const ToolsTodo = () => {
       return;
     }
 
-    console.log("resData: ", resData);
     toast({
       title: "Success",
       description: (
@@ -106,6 +106,8 @@ const ToolsTodo = () => {
         </p>
       ),
     });
+
+    router.push("/tools/todo/" + resData.id);
     setIsSubmitting(false);
   };
 

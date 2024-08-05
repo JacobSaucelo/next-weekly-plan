@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/initSupabase";
 import {
   FilterStatusData,
@@ -24,6 +24,7 @@ import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -37,7 +38,9 @@ const TaskPage = () => {
     updatedDate: "",
   });
   const [isFetching, setIsFetching] = useState<Boolean>(true);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const params = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     handleGetTask();
@@ -66,8 +69,40 @@ const TaskPage = () => {
     setPageData({ ...pageData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    console.log("pageData : ", pageData);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    const formData = { ...pageData, updatedDate: new Date().toISOString() };
+
+    const { error } = await supabase
+      .from("Tasks")
+      .update(formData)
+      .eq("id", pageData.id)
+      .select();
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem updating your request.",
+      });
+
+      console.log(error);
+      setIsSubmitting(false);
+      return;
+    }
+
+    toast({
+      title: "Success",
+      description: (
+        <p>
+          Your task{" "}
+          <span className="font-semibold">&quot;{pageData.title}&quot;</span>{" "}
+          has been updated please wait.
+        </p>
+      ),
+    });
+    router.push("/tools/todo");
+    setIsSubmitting(false);
   };
 
   return (
@@ -114,6 +149,10 @@ const TaskPage = () => {
                         id="TaskTitle"
                         placeholder="Title"
                         value={pageData.title}
+                        disabled={isSubmitting ? true : false}
+                        onChange={(e) =>
+                          handleChangeSelects("title", e.target.value)
+                        }
                       />
                     </div>
 
@@ -122,24 +161,34 @@ const TaskPage = () => {
                       <Textarea
                         className="h-[200px]"
                         placeholder="Task Description"
+                        disabled={isSubmitting ? true : false}
                         id="TaskDescription"
                         value={pageData.description}
+                        onChange={(e) =>
+                          handleChangeSelects("description", e.target.value)
+                        }
                       />
                     </div>
 
                     <Separator />
 
-                    <Button onClick={handleSubmit}>Submit</Button>
+                    <Button
+                      disabled={isSubmitting ? true : false}
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
                   </aside>
 
                   <aside className="col-span-1 border-s">
                     <div className="p-2">
                       <Label>Status</Label>
-                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                      <article className="flex flex-wrap gap-1 p-2">
                         {FilterStatusData.filter((s) => s.Value !== "").map(
                           (statusItem) => (
                             <Button
                               className="flex flex-row gap-2"
+                              disabled={isSubmitting ? true : false}
                               onClick={() =>
                                 handleChangeSelects("status", statusItem.Value)
                               }
@@ -157,11 +206,12 @@ const TaskPage = () => {
 
                     <div className="p-2">
                       <Label>Priority</Label>
-                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                      <article className="flex flex-wrap gap-1 p-2">
                         {FilterPriorityData.filter((p) => p.Value !== "").map(
                           (priorityItem) => (
                             <Button
                               className="flex flex-row gap-2"
+                              disabled={isSubmitting ? true : false}
                               onClick={() =>
                                 handleChangeSelects(
                                   "priority",
@@ -182,9 +232,10 @@ const TaskPage = () => {
 
                     <div className="p-2">
                       <Label>Label</Label>
-                      <article className="flex flex-wrap gap-1 px-2 pb-2">
+                      <article className="flex flex-wrap gap-1 p-2">
                         {LabelData.map((priorityItem) => (
                           <Button
+                            disabled={isSubmitting ? true : false}
                             onClick={() =>
                               handleChangeSelects("label", priorityItem)
                             }

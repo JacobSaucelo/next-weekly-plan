@@ -15,6 +15,7 @@ import { create } from "zustand";
 type State = {
   count: number;
   tasks: Task[];
+  isFetchingTaskList: boolean;
 };
 type Actions = {
   increment: (qty: number) => void;
@@ -22,6 +23,7 @@ type Actions = {
   handleAddTask: (task: Task) => void;
   handleRemoveTask: (taskId: string) => void;
   handleSetTasks: (data: Task[]) => void;
+  handleSetTaskFetching: (isFetching: boolean) => void;
 };
 
 export type Task = {
@@ -131,28 +133,29 @@ export const FilterPriorityData: FilterPriorityType[] = [
 export const LabelData = ["Bug", "Feature", "Documentation", "Backend", "UI"];
 
 const defaultTasks: Task[] = [
-  {
-    id: "728ed52f",
-    title:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. At expedita delectus quod optio fuga consequatur!",
-    status: "Backlog",
-    priority: "Low",
-    label: "Bug",
-    createdDate: Date.now().toString(),
-  },
-  {
-    id: "728ed52f",
-    title: "Lorem, ipsum dolor sit fuga consequatur!",
-    status: "Todo",
-    priority: "High",
-    label: "Documentation",
-    createdDate: Date.now().toString(),
-  },
+  // {
+  //   id: "728ed52f",
+  //   title:
+  //     "Lorem, ipsum dolor sit amet consectetur adipisicing elit. At expedita delectus quod optio fuga consequatur!",
+  //   status: "Backlog",
+  //   priority: "Low",
+  //   label: "Bug",
+  //   createdDate: Date.now().toString(),
+  // },
+  // {
+  //   id: "728ed52f",
+  //   title: "Lorem, ipsum dolor sit fuga consequatur!",
+  //   status: "Todo",
+  //   priority: "High",
+  //   label: "Documentation",
+  //   createdDate: Date.now().toString(),
+  // },
 ];
 
 export const useCountStore = create<State & Actions>((set) => ({
   count: 0,
   tasks: defaultTasks,
+  isFetchingTaskList: true,
   increment: (qty: number) => set((state) => ({ count: state.count + qty })),
   decrement: (qty: number) => set((state) => ({ count: state.count - qty })),
   handleAddTask: (task: Task) =>
@@ -165,4 +168,6 @@ export const useCountStore = create<State & Actions>((set) => ({
       };
     }),
   handleSetTasks: (data: Task[]) => set((state) => ({ tasks: data })),
+  handleSetTaskFetching: (isFetching: boolean) =>
+    set((state) => ({ isFetchingTaskList: isFetching })),
 }));

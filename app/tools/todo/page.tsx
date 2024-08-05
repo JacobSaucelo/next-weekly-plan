@@ -20,11 +20,15 @@ import { supabase } from "@/lib/initSupabase";
 
 const ToolsTodo = () => {
   const tasks = useCountStore((state) => state.tasks);
+  const isFetchingTaskList = useCountStore((state) => state.isFetchingTaskList);
   const counter = useCountStore((state) => state.count);
   const add = useCountStore((state) => state.increment);
   const min = useCountStore((state) => state.decrement);
   const addTask = useCountStore((state) => state.handleAddTask);
   const setTasks = useCountStore((state) => state.handleSetTasks);
+  const handleSetTaskFetching = useCountStore(
+    (state) => state.handleSetTaskFetching
+  );
 
   useEffect(() => {
     handleGetTasks();
@@ -41,12 +45,14 @@ const ToolsTodo = () => {
   };
 
   const handleGetTasks = async () => {
+    handleSetTaskFetching(true);
     const { data, error } = await supabase
       .from("Tasks")
       .select("*")
       .range(0, 9);
 
     setTasks(data as TaskType[]);
+    handleSetTaskFetching(false);
   };
 
   return (
@@ -61,7 +67,10 @@ const ToolsTodo = () => {
           CurrentPage="todo"
           ListPage={[{ name: "tools", route: "/" }]}
         />
-        <ReusablesMainHeader Title="" Subtitle="" />
+        <ReusablesMainHeader
+          Title="Todo Task List"
+          Subtitle="Create and view pending tasks."
+        />
         <Tabs defaultValue="tasks">
           <TabsList>
             <TabsTrigger value="tasks">Tasks</TabsTrigger>
