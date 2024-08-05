@@ -20,7 +20,12 @@ import {
 type BreadcrumbProps = {
   BasePage: String;
   CurrentPage: string;
-  ListPage: string[];
+  ListPage: ListPageType[];
+};
+
+type ListPageType = {
+  name: String;
+  route: string;
 };
 
 const ReusablesBreadCrumb = ({
@@ -45,9 +50,9 @@ const ReusablesBreadCrumb = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               {ListPage.map((route, index) => (
-                <Link href="route" key={index}>
+                <Link href={route.route} key={index}>
                   <DropdownMenuItem className="capitalize">
-                    {route}
+                    {route.name}
                   </DropdownMenuItem>
                 </Link>
               ))}
@@ -77,8 +82,8 @@ const ReusablesBreadCrumb = ({
             <React.Fragment key={index}>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href={route} className="capitalize">
-                  {route}
+                <BreadcrumbLink href={route.route} className="capitalize">
+                  {route.name}
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </React.Fragment>

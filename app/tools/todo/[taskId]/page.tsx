@@ -80,7 +80,10 @@ const TaskPage = () => {
             <ReusablesBreadCrumb
               BasePage="Home"
               CurrentPage={`Task ${pageData.id}` || ""}
-              ListPage={["tools", "todo"]}
+              ListPage={[
+                { name: "tools", route: "/tools" },
+                { name: "todo", route: "/tools/todo" },
+              ]}
             />
             <ReusablesMainHeader
               Title="Todo Task Editor"
