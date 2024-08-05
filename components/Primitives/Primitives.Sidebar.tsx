@@ -23,12 +23,12 @@ const SidebarLinks: SidebarLinksTypes[] = [
       {
         Title: "Home",
         Icon: <House />,
-        Route: "#",
+        Route: "/",
       },
       {
         Title: "Tools",
         Icon: <PencilRuler />,
-        Route: "#",
+        Route: "/tools/",
       },
     ],
   },

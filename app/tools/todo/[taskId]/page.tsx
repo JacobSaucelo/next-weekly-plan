@@ -11,11 +11,16 @@ import {
 } from "../Store.todo";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ReusablesToolsTodoCard from "@/components/Reusables/Reusables.Tools.Todo.Card";
 import PrimitivesNavbar from "@/components/Primitives/Primitives.Navbar";
 
 import styles from "./styles.TodoTask.module.css";
 import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
+import ReusablesBreadCrumb from "@/components/Reusables/Reusables.BreadCrumb";
+import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
+import { Plus } from "lucide-react";
+import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -72,58 +77,76 @@ const TaskPage = () => {
           <section> Loading...</section>
         ) : (
           <>
-            <section className="flex justify-center p-2">
-              <ReusablesToolsTodoCard Task={pageData} />
-            </section>
+            <ReusablesBreadCrumb
+              BasePage="Home"
+              CurrentPage={`Task ${pageData.id}` || ""}
+              ListPage={["tools", "todo"]}
+            />
+            <ReusablesMainHeader
+              Title="Todo Task Editor"
+              Subtitle="View & Edit your task with Status, Priority, and Complete Information."
+            />
 
-            <hr />
+            <Tabs defaultValue="Task">
+              <TabsList>
+                <TabsTrigger value="Task">Task {pageData.id}</TabsTrigger>
+              </TabsList>
+              <ReusablesDivider isVertical={false} />
+              <TabsContent value="Task">
+                <section className="flex justify-center px-2 py-4 rounded bg-gray-200 mb-2">
+                  <ReusablesToolsTodoCard Task={pageData} />
+                </section>
 
-            <h5>Status</h5>
-            {FilterStatusData.filter((s) => s.Value !== "").map(
-              (statusItem) => (
-                <Button
-                  className="flex flex-row gap-2"
-                  onClick={() =>
-                    handleChangeSelects("status", statusItem.Value)
-                  }
-                  key={statusItem.Value}
-                >
-                  {statusItem.Icon}
-                  {statusItem.Title}
-                </Button>
-              )
-            )}
+                <hr />
 
-            <hr />
-            <h5>priority</h5>
-            {FilterPriorityData.filter((p) => p.Value !== "").map(
-              (priorityItem) => (
-                <Button
-                  className="flex flex-row gap-2"
-                  onClick={() =>
-                    handleChangeSelects("priority", priorityItem.Value)
-                  }
-                  key={priorityItem.Value}
-                >
-                  {priorityItem.Icon}
-                  {priorityItem.Title}
-                </Button>
-              )
-            )}
+                <h5>Status</h5>
+                {FilterStatusData.filter((s) => s.Value !== "").map(
+                  (statusItem) => (
+                    <Button
+                      className="flex flex-row gap-2"
+                      onClick={() =>
+                        handleChangeSelects("status", statusItem.Value)
+                      }
+                      key={statusItem.Value}
+                    >
+                      {statusItem.Icon}
+                      {statusItem.Title}
+                    </Button>
+                  )
+                )}
 
-            <hr />
-            <h5>label</h5>
-            {LabelData.map((priorityItem) => (
-              <Button
-                onClick={() => handleChangeSelects("label", priorityItem)}
-                key={priorityItem}
-              >
-                {priorityItem}
-              </Button>
-            ))}
+                <hr />
+                <h5>priority</h5>
+                {FilterPriorityData.filter((p) => p.Value !== "").map(
+                  (priorityItem) => (
+                    <Button
+                      className="flex flex-row gap-2"
+                      onClick={() =>
+                        handleChangeSelects("priority", priorityItem.Value)
+                      }
+                      key={priorityItem.Value}
+                    >
+                      {priorityItem.Icon}
+                      {priorityItem.Title}
+                    </Button>
+                  )
+                )}
 
-            <hr />
-            <Button onClick={handleSubmit}>Submit</Button>
+                <hr />
+                <h5>label</h5>
+                {LabelData.map((priorityItem) => (
+                  <Button
+                    onClick={() => handleChangeSelects("label", priorityItem)}
+                    key={priorityItem}
+                  >
+                    {priorityItem}
+                  </Button>
+                ))}
+
+                <hr />
+                <Button onClick={handleSubmit}>Submit</Button>
+              </TabsContent>
+            </Tabs>
           </>
         )}
       </aside>
