@@ -21,6 +21,8 @@ import ReusablesBreadCrumb from "@/components/Reusables/Reusables.BreadCrumb";
 import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
 import { Plus } from "lucide-react";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -101,8 +103,28 @@ const TaskPage = () => {
                 </section>
 
                 <hr />
+                <div>
+                  <Label htmlFor="TaskTitle">Title</Label>
+                  <Input
+                    type="text"
+                    id="TaskTitle"
+                    placeholder="Title"
+                    value={pageData.title}
+                  />
+                </div>
 
-                <h5>Status</h5>
+                <hr />
+                <div>
+                  <Label htmlFor="TaskDescription">Task Description</Label>
+                  <Textarea
+                    placeholder="Task Description"
+                    id="TaskDescription"
+                    value={pageData.description}
+                  />
+                </div>
+                <hr />
+
+                <Label>Status</Label>
                 {FilterStatusData.filter((s) => s.Value !== "").map(
                   (statusItem) => (
                     <Button
@@ -119,7 +141,7 @@ const TaskPage = () => {
                 )}
 
                 <hr />
-                <h5>priority</h5>
+                <Label>Priority</Label>
                 {FilterPriorityData.filter((p) => p.Value !== "").map(
                   (priorityItem) => (
                     <Button
@@ -136,7 +158,7 @@ const TaskPage = () => {
                 )}
 
                 <hr />
-                <h5>label</h5>
+                <Label>Label</Label>
                 {LabelData.map((priorityItem) => (
                   <Button
                     onClick={() => handleChangeSelects("label", priorityItem)}
