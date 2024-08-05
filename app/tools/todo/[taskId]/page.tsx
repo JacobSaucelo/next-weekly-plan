@@ -64,22 +64,19 @@ const TaskPage = () => {
 
   return (
     <main>
-      <ReusablesToolsTodoCard Task={pageData} />
+      <section className="flex justify-center p-2">
+        <ReusablesToolsTodoCard Task={pageData} />
+      </section>
 
-      <p className="border">id: {pageData.id}</p>
+      {/* <p className="border">id: {pageData.id}</p>
       <p className="border">{pageData.status}</p>
       <p className="border">{pageData.title}</p>
       <p className="border">{pageData.priority}</p>
-      <p className="border">{pageData.label}</p>
-      <Textarea
-        className="whitespace-pre-wrap"
-        value={pageData.description}
-        disabled
-      />
+      <p className="border">{pageData.label}</p> */}
 
       {/* <p className="whitespace-pre-wrap border">{pageData.description}</p> */}
-      <p className="border">{pageData.createdDate}</p>
-      <p className="border">{pageData.updatedDate}</p>
+      {/* <p className="border">{pageData.createdDate}</p> */}
+      {/* <p className="border">{pageData.updatedDate}</p> */}
 
       <hr />
 
