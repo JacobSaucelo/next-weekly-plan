@@ -37,6 +37,8 @@ import {
 } from "@/app/tools/todo/Store.todo";
 import { useState } from "react";
 import ReusablesSpinner from "../Reusables/Reusables.Spinner";
+import { PostgrestError } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   title: z.string().min(10, {
@@ -80,7 +82,10 @@ const ToolsTodo = () => {
       updatedDate: null,
     };
 
-    const { data: resData, error } = await supabase
+    const {
+      data: resData,
+      error,
+    }: { data: any; error: PostgrestError | null } = await supabase
       .from("Tasks")
       .insert([submitFormData])
       .select();
