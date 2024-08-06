@@ -26,6 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import PrimitivesLoading from "@/components/Primitives/Primitives.Loading";
+import CustomTodoSubTask from "@/components/Customs/Custom.TodoSubTask";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -132,6 +133,7 @@ const TaskPage = () => {
             <Tabs defaultValue="Task">
               <TabsList>
                 <TabsTrigger value="Task">Task {pageData.id}</TabsTrigger>
+                <TabsTrigger value="Subtask">Subtask</TabsTrigger>
               </TabsList>
               <ReusablesDivider isVertical={false} />
               <TabsContent value="Task">
@@ -249,6 +251,9 @@ const TaskPage = () => {
                     </div>
                   </aside>
                 </section>
+              </TabsContent>
+              <TabsContent value="Subtask">
+                <CustomTodoSubTask id={pageData.id} />
               </TabsContent>
             </Tabs>
           </>
