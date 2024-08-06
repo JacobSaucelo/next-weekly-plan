@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import PrimitivesLoading from "@/components/Primitives/Primitives.Loading";
 
 const TaskPage = () => {
   const [pageData, setPageData] = useState<TaskType>({
@@ -112,7 +113,7 @@ const TaskPage = () => {
       </aside>
       <aside className={styles.TodoTaskMainContent}>
         {isFetching ? (
-          <section> Loading...</section>
+          <PrimitivesLoading />
         ) : (
           <>
             <ReusablesBreadCrumb
