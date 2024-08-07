@@ -6,9 +6,32 @@ type SubTaskPropsType = {
 
 type SubTaskType = {
   id: string;
+  parentId: string | null;
+  name: string;
+};
+// isDone: boolean;
+// isDeleted: boolean;
+// taskId: string;
+
+type TreePropsType = {
+  data: SubTaskType[];
 };
 
-const buildTree = (data) => {
+type TreeNodeType = {
+  node: NodeType | null;
+  depth: number;
+  maxDepth: number;
+  onLoadMore: () => void;
+};
+
+type NodeType = {
+  parentId: string | null;
+  children: NodeType[];
+  id: string;
+  name: string;
+};
+
+const buildTree = (data: SubTaskType[]) => {
   const map = new Map();
   let root = null;
 
@@ -28,10 +51,12 @@ const buildTree = (data) => {
     }
   });
 
+  console.log("root: ", root);
+
   return root;
 };
 
-const TreeNode = ({ node, depth, maxDepth, onLoadMore }) => {
+const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
   if (!node) return null;
 
   const showChildren =
@@ -68,9 +93,9 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }) => {
   );
 };
 
-const Tree = ({ data }) => {
+const Tree = (props: TreePropsType) => {
   const [maxDepth, setMaxDepth] = useState(3);
-  const tree = buildTree(data);
+  const tree = buildTree(props.data);
 
   const handleLoadMore = () => {
     setMaxDepth(Infinity);
@@ -89,17 +114,17 @@ const Tree = ({ data }) => {
 };
 
 const CustomTodoSubTask = (task: SubTaskPropsType) => {
-  const [data, setTempData] = useState<any>([
-    { id: 1, parentId: null, name: "Root" },
-    { id: 2, parentId: 1, name: "Child 1" },
-    { id: 3, parentId: 1, name: "Child 2" },
-    { id: 4, parentId: 2, name: "Grandchild 1" },
-    { id: 5, parentId: 2, name: "Grandchild 2" },
-    { id: 6, parentId: 3, name: "Grandchild 3" },
-    { id: 7, parentId: 4, name: "Great-Grandchild 1" },
-    { id: 8, parentId: 4, name: "Great-Grandchild 2" },
-    { id: 9, parentId: 5, name: "Great-Grandchild 3" },
-    { id: 10, parentId: 6, name: "Great-Grandchild 4" },
+  const [data, setTempData] = useState<SubTaskType[]>([
+    { id: "1", parentId: null, name: "Root" },
+    { id: "2", parentId: "1", name: "Child 1" },
+    { id: "3", parentId: "1", name: "Child 2" },
+    { id: "4", parentId: "2", name: "Grandchild 1" },
+    { id: "5", parentId: "2", name: "Grandchild 2" },
+    { id: "6", parentId: "3", name: "Grandchild 3" },
+    { id: "7", parentId: "4", name: "Great-Grandchild 1" },
+    { id: "8", parentId: "4", name: "Great-Grandchild 2" },
+    { id: "9", parentId: "5", name: "Great-Grandchild 3" },
+    { id: "10", parentId: "6", name: "Great-Grandchild 4" },
   ]);
 
   if (!task.id) {
