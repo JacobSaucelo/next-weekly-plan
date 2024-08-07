@@ -21,13 +21,19 @@ import {
 } from "@/components/ui/alert-dialog";
 import ReusablesDivider from "../Reusables/Reusables.Divider";
 import { Badge } from "../ui/badge";
+import { toast } from "../ui/use-toast";
 
 type SubTaskCardPropsType = {
   props: SubTaskType;
   depth: number;
+  childrenLength: number;
 };
 
-const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
+const TodoSubTaskCard = ({
+  props,
+  depth,
+  childrenLength,
+}: SubTaskCardPropsType) => {
   if (props.parentId === null) {
     return (
       <aside className="border-b-2 border-black flex p-2 items-center justify-between ">
@@ -49,7 +55,31 @@ const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
     return;
   }
 
-  const handleDoneTask = () => {};
+  const handleDoneTask = () => {
+    toast({
+      title: "Subtask Completed",
+      description: (
+        <p>
+          Your subtask{" "}
+          <span className="font-semibold">&quot;{props.name}&quot;</span> is
+          marked complete.
+        </p>
+      ),
+    });
+  };
+
+  const handleRemoveTask = () => {
+    toast({
+      title: "Subtask Removed",
+      description: (
+        <p>
+          Your subtask{" "}
+          <span className="font-semibold">&quot;{props.name}&quot;</span> has
+          been removed.
+        </p>
+      ),
+    });
+  };
 
   return (
     <aside className="border-b-2 border-gray-400 flex py-1 px-2 items-center justify-between gap-2">
@@ -62,10 +92,10 @@ const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
           <ChevronRight /> {props.name}
         </p>
       )}
+
       {/* <p>{props.id}</p>
       <p>{props.isDone ? "true" : "false"}</p>
       <p>{props.isDeleted ? "true" : "false"}</p> */}
-
       <div className="flex gap-2 ps-2">
         <AlertDialog>
           <AlertDialogTrigger>
@@ -87,9 +117,11 @@ const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <Button className="flex gap-1">
-                <CircleCheck /> Complete Subtask
-              </Button>
+              <AlertDialogAction asChild>
+                <Button className="flex gap-1" onClick={handleDoneTask}>
+                  <CircleCheck /> Complete Subtask
+                </Button>
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
@@ -101,30 +133,38 @@ const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
           </Button>
         )}
 
-        <AlertDialog>
-          <AlertDialogTrigger>
-            <Button size="sm" variant="outline" className="flex gap-1 ">
-              <CircleX className="text-red-600" />
-              Remove
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Once you proceed, you won’t be able to reverse this action. It
-                will permanently remove your subtask named{" "}
-                <Badge>&quot;{props.name}&quot;</Badge>.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <Button className="flex gap-1" variant="destructive">
-                <CircleX /> Delete Subtask
+        {childrenLength === 0 && (
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button size="sm" variant="outline" className="flex gap-1 ">
+                <CircleX className="text-red-600" />
+                Remove
               </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Once you proceed, you won&apos;t be able to reverse this
+                  action. It will permanently remove your subtask named{" "}
+                  <Badge>&quot;{props.name}&quot;</Badge>.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction asChild>
+                  <Button
+                    className="flex gap-1"
+                    variant="destructive"
+                    onClick={handleRemoveTask}
+                  >
+                    <CircleX /> Delete Subtask
+                  </Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
     </aside>
   );

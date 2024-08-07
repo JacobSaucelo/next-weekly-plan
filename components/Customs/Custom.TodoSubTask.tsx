@@ -49,7 +49,7 @@ const buildTree = (data: SubTaskType[]) => {
       root = node;
     } else {
       const parentNode = map.get(item.parentId);
-      if (parentNode) {
+      if (parentNode && item.isDeleted === false) {
         parentNode.children.push(node);
       }
     }
@@ -91,7 +91,11 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
       }`}
       style={{ marginLeft: depth * 3 }}
     >
-      <TodoSubTaskCard props={node} depth={depth} />
+      <TodoSubTaskCard
+        props={node}
+        depth={depth}
+        childrenLength={node.children.length}
+      />
 
       {childrenHtml}
     </li>
@@ -202,15 +206,6 @@ const CustomTodoSubTask = (task: SubTaskPropsType) => {
     {
       id: "10",
       parentId: "6",
-      name: "Great-Grandchild 4",
-
-      isDone: false,
-      isDeleted: false,
-      taskId: "11",
-    },
-    {
-      id: "11",
-      parentId: "10",
       name: "Great-Grandchild 4",
 
       isDone: false,
