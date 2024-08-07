@@ -55,8 +55,6 @@ const buildTree = (data: SubTaskType[]) => {
     }
   });
 
-  console.log("root: ", root);
-
   return root;
 };
 
@@ -88,15 +86,10 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
 
   return (
     <li
-      className={`py-1 ${depth > 0 ? "border-l border-gray-300" : ""}`}
+      className={`ps-2 py-1 ${depth > 0 ? "border-l border-blue-400" : ""}`}
       style={{ marginLeft: depth * 3 }}
     >
       <TodoSubTaskCard props={node} />
-      {/* 
-      <p>{node.id}</p>
-      <p>{node.name}</p>
-      <p>{node.isDone ? "true" : "false"}</p>
-      <p>{node.isDeleted ? "true" : "false"}</p> */}
 
       {childrenHtml}
     </li>
@@ -201,7 +194,7 @@ const CustomTodoSubTask = (task: SubTaskPropsType) => {
       name: "Great-Grandchild 3",
 
       isDone: false,
-      isDeleted: false,
+      isDeleted: true,
       taskId: "11",
     },
     {
@@ -229,10 +222,9 @@ const CustomTodoSubTask = (task: SubTaskPropsType) => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Nested List with Load More</h1>
+    <section className="p-4">
       <Tree data={data} />
-    </div>
+    </section>
   );
 };
 
