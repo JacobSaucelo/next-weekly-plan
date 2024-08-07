@@ -1,11 +1,15 @@
 import React from "react";
 
 type TodoSubTaskType = {
-  id: string;
+  id: string | undefined;
 };
 
 const CustomTodoSubTask = (task: TodoSubTaskType) => {
-  return <div>task: {task.id}</div>;
+  if (!task.id) {
+    return "failed to get subtask";
+  }
+
+  return <section>{task.id}</section>;
 };
 
 export default CustomTodoSubTask;

@@ -3,28 +3,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/initSupabase";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
 import {
   FilterStatusData,
   FilterPriorityData,
   LabelData,
   Task as TaskType,
 } from "../Store.todo";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ReusablesToolsTodoCard from "@/components/Reusables/Reusables.Tools.Todo.Card";
-import PrimitivesNavbar from "@/components/Primitives/Primitives.Navbar";
 
 import styles from "./styles.TodoTask.module.css";
+
+import ReusablesToolsTodoCard from "@/components/Reusables/Reusables.Tools.Todo.Card";
 import PrimitivesSidebar from "@/components/Primitives/Primitives.Sidebar";
 import ReusablesBreadCrumb from "@/components/Reusables/Reusables.BreadCrumb";
 import ReusablesMainHeader from "@/components/Reusables/Reusables.MainHeader";
-import { Plus } from "lucide-react";
 import ReusablesDivider from "@/components/Reusables/Reusables.Divider";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { toast } from "@/components/ui/use-toast";
 import PrimitivesLoading from "@/components/Primitives/Primitives.Loading";
 import CustomTodoSubTask from "@/components/Customs/Custom.TodoSubTask";
 
@@ -41,6 +40,7 @@ const TaskPage = () => {
   });
   const [isFetching, setIsFetching] = useState<Boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isError, setIsError] = useState<Boolean>(false);
   const params = useParams();
   const router = useRouter();
 
@@ -50,6 +50,7 @@ const TaskPage = () => {
 
   const handleGetTask = async () => {
     setIsFetching(true);
+    setIsError(false);
 
     const { data, error } = await supabase
       .from("Tasks")
@@ -59,6 +60,7 @@ const TaskPage = () => {
     if (error) {
       console.log("error: ", error);
       setIsFetching(false);
+      setIsError(true);
 
       return;
     }
@@ -106,6 +108,10 @@ const TaskPage = () => {
     router.push("/tools/todo");
     setIsSubmitting(false);
   };
+
+  if (isError) {
+    return "error";
+  }
 
   return (
     <main className={styles.TodoTaskContainer}>
