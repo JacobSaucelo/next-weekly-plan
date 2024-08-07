@@ -76,7 +76,7 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
       ))}
       {depth === maxDepth && node.children.length > 0 && (
         <li style={{ marginLeft: depth * 3 }}>
-          <button className="text-blue-500 underline" onClick={onLoadMore}>
+          <button className="text-blue-400 underline" onClick={onLoadMore}>
             Load More
           </button>
         </li>
@@ -86,10 +86,10 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
 
   return (
     <li
-      className={`ps-2 py-1 ${depth > 0 ? "border-l border-blue-400" : ""}`}
+      className={`ps-2 py-1 ${depth > 0 ? "border-l border-gray-200" : ""}`}
       style={{ marginLeft: depth * 3 }}
     >
-      <TodoSubTaskCard props={node} />
+      <TodoSubTaskCard props={node} depth={depth} />
 
       {childrenHtml}
     </li>

@@ -1,16 +1,25 @@
 import React from "react";
 import { SubTaskType } from "./Custom.TodoSubTask";
 import { Button } from "../ui/button";
+import { CircleCheck, CirclePlus, CircleX } from "lucide-react";
+import ReusablesDivider from "../Reusables/Reusables.Divider";
 
 type SubTaskCardPropsType = {
   props: SubTaskType;
+  depth: number;
 };
 
-const TodoSubTaskCard = ({ props }: SubTaskCardPropsType) => {
+const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
   if (props.parentId === null) {
     return (
-      <aside className="border rounded flex p-2 text-white bg-black dark:text-black dark:bg-white ">
-        Subtasks
+      <aside className="border rounded flex p-2 items-center justify-between ">
+        <p className="font-bold">Subtasks</p>
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" className="flex gap-1">
+            <CirclePlus className="text-blue-400" />
+            Add
+          </Button>
+        </div>
       </aside>
     );
   }
@@ -22,21 +31,27 @@ const TodoSubTaskCard = ({ props }: SubTaskCardPropsType) => {
   return (
     <aside className="border rounded flex py-1 px-2 items-center justify-between gap-2">
       {props.isDone ? (
-        <p className="line-through">{props.name}</p>
+        <p className="line-through font-semibold">{props.name}</p>
       ) : (
-        <p>{props.name}</p>
+        <p className="font-semibold">{props.name}</p>
       )}
       {/* <p>{props.id}</p>
       <p>{props.isDone ? "true" : "false"}</p>
       <p>{props.isDeleted ? "true" : "false"}</p> */}
-      <div className="flex gap-2">
-        <Button size="sm" variant="outline">
+
+      <div className="flex gap-2 border-s ps-2">
+        <Button size="sm" variant="outline" className="flex gap-1">
+          <CircleCheck className="text-green-400" />
           Done
         </Button>
-        <Button size="sm" variant="secondary">
-          Add
-        </Button>
-        <Button size="sm" variant="destructive">
+        {depth < 3 && (
+          <Button size="sm" variant="outline" className="flex gap-1 ">
+            <CirclePlus className="text-blue-400" />
+            Add
+          </Button>
+        )}
+        <Button size="sm" variant="outline" className="flex gap-1 ">
+          <CircleX className="text-red-600" />
           Remove
         </Button>
       </div>
