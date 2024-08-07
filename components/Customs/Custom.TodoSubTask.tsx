@@ -86,7 +86,9 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
 
   return (
     <li
-      className={`ps-2 py-1 ${depth > 0 ? "border-l border-gray-200" : ""}`}
+      className={`ps-2 py-1 ${
+        depth > 0 ? "border-l-2 border-black dark:border-white" : ""
+      }`}
       style={{ marginLeft: depth * 3 }}
     >
       <TodoSubTaskCard props={node} depth={depth} />
