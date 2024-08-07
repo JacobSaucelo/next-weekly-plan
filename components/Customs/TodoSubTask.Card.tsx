@@ -1,7 +1,13 @@
 import React from "react";
 import { SubTaskType } from "./Custom.TodoSubTask";
 import { Button } from "../ui/button";
-import { ChevronRight, CircleCheck, CirclePlus, CircleX } from "lucide-react";
+import {
+  ChevronRight,
+  CircleCheck,
+  CirclePlus,
+  CircleX,
+  LayoutList,
+} from "lucide-react";
 import ReusablesDivider from "../Reusables/Reusables.Divider";
 
 type SubTaskCardPropsType = {
@@ -13,7 +19,10 @@ const TodoSubTaskCard = ({ props, depth }: SubTaskCardPropsType) => {
   if (props.parentId === null) {
     return (
       <aside className="border-b-2 border-black flex p-2 items-center justify-between ">
-        <p className="font-bold">Subtasks</p>
+        <p className="font-bold flex gap-2 items-center text-xl">
+          <LayoutList />
+          Subtasks
+        </p>
         <div className="flex gap-2">
           <Button size="sm" variant="outline" className="flex gap-1">
             <CirclePlus className="text-blue-400" />
