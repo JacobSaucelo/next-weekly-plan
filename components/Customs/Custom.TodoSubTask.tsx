@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import TodoSubTaskCard from "./TodoSubTask.Card";
 
 type SubTaskPropsType = {
   id: string | undefined;
 };
 
-type SubTaskType = {
+export type SubTaskType = {
   id: string;
   parentId: string | null;
   name: string;
+  isDone: boolean;
+  isDeleted: boolean;
+  taskId: string;
 };
-// isDone: boolean;
-// isDeleted: boolean;
-// taskId: string;
 
 type TreePropsType = {
   data: SubTaskType[];
@@ -29,6 +30,9 @@ type NodeType = {
   children: NodeType[];
   id: string;
   name: string;
+  isDone: boolean;
+  isDeleted: boolean;
+  taskId: string;
 };
 
 const buildTree = (data: SubTaskType[]) => {
@@ -73,7 +77,7 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
         />
       ))}
       {depth === maxDepth && node.children.length > 0 && (
-        <li>
+        <li style={{ marginLeft: depth * 3 }}>
           <button className="text-blue-500 underline" onClick={onLoadMore}>
             Load More
           </button>
@@ -85,9 +89,15 @@ const TreeNode = ({ node, depth, maxDepth, onLoadMore }: TreeNodeType) => {
   return (
     <li
       className={`py-1 ${depth > 0 ? "border-l border-gray-300" : ""}`}
-      style={{ marginLeft: depth * 20 }}
+      style={{ marginLeft: depth * 3 }}
     >
-      {node.name}
+      <TodoSubTaskCard props={node} />
+      {/* 
+      <p>{node.id}</p>
+      <p>{node.name}</p>
+      <p>{node.isDone ? "true" : "false"}</p>
+      <p>{node.isDeleted ? "true" : "false"}</p> */}
+
       {childrenHtml}
     </li>
   );
@@ -115,16 +125,103 @@ const Tree = (props: TreePropsType) => {
 
 const CustomTodoSubTask = (task: SubTaskPropsType) => {
   const [data, setTempData] = useState<SubTaskType[]>([
-    { id: "1", parentId: null, name: "Root" },
-    { id: "2", parentId: "1", name: "Child 1" },
-    { id: "3", parentId: "1", name: "Child 2" },
-    { id: "4", parentId: "2", name: "Grandchild 1" },
-    { id: "5", parentId: "2", name: "Grandchild 2" },
-    { id: "6", parentId: "3", name: "Grandchild 3" },
-    { id: "7", parentId: "4", name: "Great-Grandchild 1" },
-    { id: "8", parentId: "4", name: "Great-Grandchild 2" },
-    { id: "9", parentId: "5", name: "Great-Grandchild 3" },
-    { id: "10", parentId: "6", name: "Great-Grandchild 4" },
+    {
+      id: "1",
+      parentId: null,
+      name: "Root",
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "2",
+      parentId: "1",
+      name: "Child 1",
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "3",
+      parentId: "1",
+      name: "Child 2",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "4",
+      parentId: "2",
+      name: "Grandchild 1",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "5",
+      parentId: "2",
+      name: "Grandchild 2",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "6",
+      parentId: "3",
+      name: "Grandchild 3",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "7",
+      parentId: "4",
+      name: "Great-Grandchild 1",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "8",
+      parentId: "4",
+      name: "Great-Grandchild 2",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "9",
+      parentId: "5",
+      name: "Great-Grandchild 3",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "10",
+      parentId: "6",
+      name: "Great-Grandchild 4",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
+    {
+      id: "11",
+      parentId: "10",
+      name: "Great-Grandchild 4",
+
+      isDone: false,
+      isDeleted: false,
+      taskId: "11",
+    },
   ]);
 
   if (!task.id) {
