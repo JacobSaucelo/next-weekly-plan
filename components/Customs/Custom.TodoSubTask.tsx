@@ -6,7 +6,7 @@ type SubTaskPropsType = {
 };
 
 export type SubTaskType = {
-  id: string;
+  id?: string;
   parentId: string | null;
   name: string;
   isDone: boolean;
