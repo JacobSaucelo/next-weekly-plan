@@ -33,6 +33,7 @@ import { Badge } from "../ui/badge";
 import { toast } from "../ui/use-toast";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { supabase } from "@/lib/initSupabase";
 
 type SubTaskCardPropsType = {
   props: SubTaskType;
@@ -85,7 +86,7 @@ const TodoSubTaskCard = ({
     console.log("handleChangeTaskDetails: ", e.target.value);
   };
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     setSubTaskText(null);
 
     toast({
@@ -139,7 +140,7 @@ const TodoSubTaskCard = ({
 
       <div className="flex gap-2 ps-2">
         <AlertDialog>
-          <AlertDialogTrigger>
+          <AlertDialogTrigger asChild>
             <Button size="sm" variant="outline" className="flex gap-1">
               <CircleCheck className="text-green-400" />
               Done
@@ -206,7 +207,7 @@ const TodoSubTaskCard = ({
 
         {childrenLength === 0 && (
           <AlertDialog>
-            <AlertDialogTrigger>
+            <AlertDialogTrigger asChild>
               <Button size="sm" variant="outline" className="flex gap-1 ">
                 <CircleX className="text-red-600" />
                 Remove
