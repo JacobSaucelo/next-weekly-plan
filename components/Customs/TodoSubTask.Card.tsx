@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SubTaskType } from "./Custom.TodoSubTask";
 import { Button } from "../ui/button";
 import {
@@ -19,9 +19,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import ReusablesDivider from "../Reusables/Reusables.Divider";
 import { Badge } from "../ui/badge";
 import { toast } from "../ui/use-toast";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 type SubTaskCardPropsType = {
   props: SubTaskType;
@@ -34,6 +45,8 @@ const TodoSubTaskCard = ({
   depth,
   childrenLength,
 }: SubTaskCardPropsType) => {
+  const [subTaskText, setSubTaskText] = useState<string | null>(null);
+
   if (props.parentId === null) {
     return (
       <aside className="border-b-2 border-black flex p-2 items-center justify-between ">
@@ -42,10 +55,23 @@ const TodoSubTaskCard = ({
           Subtasks
         </p>
         <div className="flex gap-2">
-          <Button size="sm" variant="outline" className="flex gap-1">
-            <CirclePlus className="text-blue-400" />
-            Add
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm" variant="outline" className="flex gap-1">
+                <CirclePlus className="text-blue-400" />
+                Add
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </aside>
     );
@@ -54,6 +80,24 @@ const TodoSubTaskCard = ({
   if (props.isDeleted) {
     return;
   }
+
+  const handleChangeTaskDetails = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("handleChangeTaskDetails: ", e.target.value);
+  };
+
+  const handleAddTask = () => {
+    setSubTaskText(null);
+
+    toast({
+      title: "Subtask Added",
+      description: (
+        <p>
+          Your subtask <span className="font-semibold">&quot;name&quot;</span>{" "}
+          has been added.
+        </p>
+      ),
+    });
+  };
 
   const handleDoneTask = () => {
     toast({
@@ -93,9 +137,6 @@ const TodoSubTaskCard = ({
         </p>
       )}
 
-      {/* <p>{props.id}</p>
-      <p>{props.isDone ? "true" : "false"}</p>
-      <p>{props.isDeleted ? "true" : "false"}</p> */}
       <div className="flex gap-2 ps-2">
         <AlertDialog>
           <AlertDialogTrigger>
@@ -127,10 +168,40 @@ const TodoSubTaskCard = ({
         </AlertDialog>
 
         {depth < 3 && (
-          <Button size="sm" variant="outline" className="flex gap-1 ">
-            <CirclePlus className="text-blue-400" />
-            Add
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm" variant="outline" className="flex gap-1 ">
+                <CirclePlus className="text-blue-400" />
+                Add
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create new subtask</DialogTitle>
+                <DialogDescription>
+                  Fill in the information below to create a new subtask.
+                </DialogDescription>
+              </DialogHeader>
+              <article>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="addSubTask" className="text-right">
+                    Subtask
+                  </Label>
+                  <Input
+                    id="addSubTask"
+                    defaultValue="Pedro Duarte"
+                    className="col-span-3"
+                    onChange={handleChangeTaskDetails}
+                  />
+                </div>
+              </article>
+              <DialogFooter>
+                <Button className="flex gap-1" onClick={handleAddTask}>
+                  <CirclePlus /> Create
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         )}
 
         {childrenLength === 0 && (
