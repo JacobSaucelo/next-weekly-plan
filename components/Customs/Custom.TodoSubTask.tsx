@@ -227,32 +227,38 @@ const CustomTodoSubTask = (task: SubTaskPropsType) => {
     const { data: SubTasksRes, error } = await supabase
       .from("SubTasks")
       .select("*")
-      .eq("isDeleted", false)
-      .eq("taskId", task.id);
+      .eq("taskId", task.id)
+      .eq("isDeleted", false);
+
+    if (error) {
+      console.log("handleGetSubTasks: ", error);
+    }
+
+    console.log("SubTasksRes: ", SubTasksRes, "task.id: ", task.id);
 
     setTempData(SubTasksRes as SubTaskType[]);
-
-    console.log("SubTasksRes: ", SubTasksRes);
   };
 
   if (!task.id) {
     return "failed to get subtask";
   }
 
+  if (data.length <= 0) {
+    return (
+      <article className="border min-h-[60vh] flex items-center justify-center">
+        <ClipboardList />
+        <h3>No Subtask</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
+          eum.
+        </p>
+      </article>
+    );
+  }
+
   return (
     <section className="p-4">
-      {data.length > 0 ? (
-        <Tree data={data} />
-      ) : (
-        <article className="border min-h-[60vh] flex items-center justify-center">
-          <ClipboardList />
-          <h3>No Subtask</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            eum.
-          </p>
-        </article>
-      )}
+      <Tree data={data} />
     </section>
   );
 };
