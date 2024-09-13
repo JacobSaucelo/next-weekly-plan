@@ -239,6 +239,22 @@ const CustomTodoSubTask = (task: SubTaskPropsType) => {
     setTempData(SubTasksRes as SubTaskType[]);
   };
 
+  const handleCreateInitialSubtask = async () => {
+    // const initialSubTaskForm: SubTaskType = {
+    //   id
+    //   parentId:"",
+    //   name:"",
+    //   isDone:false,
+    //   isDeleted:false,
+    //   taskId:task.id,
+    //   subTaskId:"",
+    // }
+    // const { data, error } = await supabase
+    //   .from("SubTasks")
+    //   .insert([{ some_column: "someValue", other_column: "otherValue" }])
+    //   .select();
+  };
+
   if (!task.id) {
     return "failed to get subtask";
   }

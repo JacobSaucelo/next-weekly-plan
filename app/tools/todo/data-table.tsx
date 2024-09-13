@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
           </div>
         ) : (
           <p className="text-lg font-semibold px-2">
-            {data.length} Results found
+            {data ? data.length : 0} Results found
           </p>
         )}
         <div className="flex items-center py-4">
